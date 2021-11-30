@@ -19,4 +19,5 @@ Route::group(['middleware'=>['authCheck']], function(){
     Route::get('/auth', [mainController::class, 'auth'])->name('auth');
     Route::get('/post/add', [mainController::class, 'add'])->name('post.add');
     Route::get('/user/post/{id}', [mainController::class, 'show'])->name('post.show');
+    Route::get('/user/profile/{id}', [mainController::class, 'profile'])->name('profile');
 });

@@ -14,7 +14,7 @@
         @if (!Auth::guest())
         <a href="{{ route('post.add') }}">Create new announcement</a> |
         <a href="user/post/{{ auth()->user()->id }}">My announcement</a> |
-        <a href="">Profile</a>
+        <a href="user/profile/{{ auth()->user()->id }}">Profile</a>
         @endif
         </nav>
     @livewireScripts

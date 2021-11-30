@@ -25,4 +25,9 @@ class mainController extends Controller
         $id = $id;
         return view('showposts', compact('id'));
     }
+    public function profile($id)
+    {
+        $id = $id;
+        return view('profile', compact('id'));
+    }
 }
