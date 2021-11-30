@@ -1,5 +1,9 @@
 <fieldset>
     <legend>Filtring system by <a href="https://github.com/KenjiWriter">@Wenzzi</a></legend>
+    @if (!Auth::guest())
+            Hi {{ auth()->user()->name }}! <a href="{{ route('post.add') }}">Add announcement</a>
+            <br>
+    @endif
     <input type="text" wire:model="search" placeholder="Search...">
     <select wire:model="category">
         <option value="0">All Category</option>
@@ -27,6 +31,7 @@
                 }
                 if($product['First_owner'] == 1) $owner = "YES"; else $owner = "NO";
                 ?>
+                <td>{{ $product['Owner'] }}</td> -
                 <td>{{ $product['name'] }}</td>,
                 <td>{{ $category }}</td>,
                 <td>First owner: {{ $owner }}</td>,

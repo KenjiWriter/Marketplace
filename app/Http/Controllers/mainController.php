@@ -15,4 +15,9 @@ class mainController extends Controller
     {
         return view('home');
     }
+
+    public function add()
+    {
+        return view('add');
+    }
 }
