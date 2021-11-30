@@ -34,6 +34,7 @@ class Filtr extends Component
         ->when($this->price_max, function($query) {
             $query->where('price', '<=', $this->price_max);
         })
+        ->where('Active',1)
         ->where('name','like',"%$search%")
         ->get();
         return view('livewire.filtr', [

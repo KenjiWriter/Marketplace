@@ -11,7 +11,9 @@ class product extends Model
 
     protected $fillable = [
         'Owner',
+        'user_id',
         'name',
+        'Active',
         'price',
         'category',
         'First_owner',

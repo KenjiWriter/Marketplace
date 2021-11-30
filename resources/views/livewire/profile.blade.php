@@ -3,9 +3,9 @@
     @if ($user)
         <h3 align="center">Profile {{ $user->name }}</h3>
         Joined in: {{ $user->created_at->toFormattedDateString() }} <br>
-        @if($products && $products->count() > 0)
-            Announcements: {{ $products->count() }} <br>
-            Active announcements: <br> 
+        @if($products && $count_all > 0)
+            Announcements: {{ $count_all }} <br>
+            Active announcements ({{ $products->count() }}): <br> 
             @foreach ($products as $product)
             <tr>
                 <?php 
@@ -19,6 +19,9 @@
                         case 3:
                             $category = "Computers";
                             break;
+                        default:
+                            $category = "Other";
+                            break;
                     }
                     if($product['First_owner'] == 1) $owner = "YES"; else $owner = "NO";
 
@@ -28,6 +31,9 @@
                 <td>First owner: {{ $owner }}</td>,
                 <td>Price: {{ $product->price }}$</td> 
                 <td>| Added:  {{ $product->created_at->diffForHumans() }}</td>
+                @if ($product->user_id == auth()->user()->id)
+                    | <button wire:click.prevent="delete('{{ $product->id }}')" style="background-color: #f00101; color: #ffff; cursor:pointer;">DELATE</button>
+                @endif
             </tr><hr>
         @endforeach
         @endif

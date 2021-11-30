@@ -11,7 +11,7 @@ class ShowPosts extends Component
     public $user_id;
     public function render()
     {
-        $products = product::where('user_id',$this->user_id)->get();
+        $products = product::where('user_id',$this->user_id)->where('Active',1)->get();
         return view('livewire.show-posts', [
             'products' => $products
         ]);
