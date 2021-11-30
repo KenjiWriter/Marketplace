@@ -20,4 +20,9 @@ class mainController extends Controller
     {
         return view('add');
     }
+    public function show($id)
+    {
+        $id = $id;
+        return view('showposts', compact('id'));
+    }
 }

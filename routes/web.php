@@ -18,4 +18,5 @@ Route::get('/', [mainController::class, 'index']);
 Route::group(['middleware'=>['authCheck']], function(){
     Route::get('/auth', [mainController::class, 'auth']);
     Route::get('/post/add', [mainController::class, 'add'])->name('post.add');
+    Route::get('/user/post/{id}', [mainController::class, 'show'])->name('post.show');
 });

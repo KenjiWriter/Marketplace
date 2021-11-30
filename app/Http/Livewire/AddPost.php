@@ -22,7 +22,7 @@ class AddPost extends Component
         } else {
             $first_owner = 0;
         }
-        $productData = array('name' => $this->name, 'First_owner' => $first_owner, 'Owner' => auth()->user()->name, 'price' => $this->price, 'category' => $this->category);
+        $productData = array('name' => $this->name,'user_id' => auth()->user->id, 'First_owner' => $first_owner, 'Owner' => auth()->user()->name, 'price' => $this->price, 'category' => $this->category);
         product::create($productData);
         session()->flash('message', "Successfuly added new announcement.");
     }
