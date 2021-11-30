@@ -15,5 +15,6 @@ use App\Http\Controllers\mainController;
 */
 
 Route::get('/', [mainController::class, 'index']);
-
-Route::view('login','home');
+Route::group(['middleware'=>['authCheck']], function(){
+Route::get('/auth', [mainController::class, 'auth']);
+});

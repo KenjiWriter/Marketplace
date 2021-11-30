@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Hash;
-use App\User;
+use App\Models\User;
 
 class LoginRegister extends Component
 {

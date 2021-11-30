@@ -10,4 +10,9 @@ class mainController extends Controller
     {
         return view('index');
     }
+
+    public function auth()
+    {
+        return view('home');
+    }
 }
