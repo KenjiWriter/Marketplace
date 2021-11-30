@@ -14,6 +14,9 @@
                         case 3:
                             $category = "Computers";
                             break;
+                        default:
+                            $category = "Other";
+                            break;
                     }
                     if($product['First_owner'] == 1) $owner = "YES"; else $owner = "NO";
 
