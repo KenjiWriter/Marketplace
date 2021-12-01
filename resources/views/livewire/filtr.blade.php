@@ -39,7 +39,7 @@
                 <td>{{ $category }}</td>,
                 <td>First owner: {{ $owner }}</td>,
                 <td>Price: {{ $product->price }}$</td> 
-                <td>| Added:  {{ $product->created_at->diffForHumans() }} by {{ $product->Owner }}</td>
+                <td>| Added:  {{ $product->created_at->diffForHumans() }} by <a href="{{ route('profile', $product->user_id) }}">{{ $product->Owner }}</a></td>
             </tr><hr>
         @endforeach
         @else
