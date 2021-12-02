@@ -42,6 +42,7 @@
                 <td>| Added:  {{ $product->created_at->diffForHumans() }} by <a href="{{ route('profile', $product->user_id) }}">{{ $product->Owner }}</a></td>
             </tr><hr>
         @endforeach
+        {{ $products->links() }}
         @else
         <h3>NO OUTPUT</h3>
     @endif
