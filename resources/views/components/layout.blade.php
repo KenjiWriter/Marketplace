@@ -15,6 +15,8 @@
         <a href="{{ route('post.add') }}">Create new announcement</a> |
         <a href="{{route('post.show',auth()->user()->id) }}">My announcement</a> |
         <a href="{{route('profile', auth()->user()->id) }}">Profile</a>
+            @else
+            <a href="{{route('auth') }}">Login/Register</a>
         @endif
         </nav>
     @livewireScripts

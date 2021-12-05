@@ -31,9 +31,6 @@
                 <td>First owner: {{ $owner }}</td>,
                 <td>Price: {{ $product->price }}$</td> 
                 <td>| Added:  {{ $product->created_at->diffForHumans() }}</td>
-                @if ($product->user_id == auth()->user()->id)
-                    | <button wire:click.prevent="delete('{{ $product->id }}')" style="background-color: #f00101; color: #ffff; cursor:pointer;">DELATE</button>
-                @endif
             </tr><hr>
         @endforeach
         @endif

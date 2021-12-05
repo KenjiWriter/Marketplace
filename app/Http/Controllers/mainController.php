@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\product;
 
 class mainController extends Controller
 {
@@ -29,5 +30,9 @@ class mainController extends Controller
     {
         $id = $id;
         return view('profile', compact('id'));
+    }
+    public function delete(request $req)
+    {
+        dd($req->all());
     }
 }
