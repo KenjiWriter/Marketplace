@@ -17,9 +17,13 @@ use App\Http\Controllers\mainController;
 Route::get('/', [mainController::class, 'index'])->name('index');
 Route::get('/user/profile/{id}', [mainController::class, 'profile'])->name('profile');
 Route::get('/announcement/{product_id}', [mainController::class, 'product_page'])->name('product_page');
-Route::group(['middleware'=>['authCheck']], function(){
+
+Route::group(['middleware'=>['authCheck']], function(){ //To access these pages, the user must be logged in
+    //Auth
     Route::get('/auth', [mainController::class, 'auth'])->name('auth');
+    Route::post('/auth/logout', [mainController::class, 'logout'])->name('auth.logout');
+    //User
     Route::get('/post/add', [mainController::class, 'add'])->name('post.add');
     Route::get('/user/post/{id}', [mainController::class, 'show'])->name('post.show');
-    Route::post('/auth/logout', [mainController::class, 'delete'])->name('auth.logout');
+    Route::post('/post/', [mainController::class, 'post_delete'])->name('post.delete');
 });

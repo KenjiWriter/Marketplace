@@ -32,12 +32,17 @@ class mainController extends Controller
         $id = $id;
         return view('user.profile', compact('id'));
     }
-    public function delete(Request $request)
+    public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
+    }
+    public function post_delete(Request $req)
+    {
+        product::where('id',$req->id)->delete();
+        return back();
     }
     public function product_page(request $req) 
     {

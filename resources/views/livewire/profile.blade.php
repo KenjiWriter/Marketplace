@@ -31,7 +31,14 @@
                 <td>First owner: {{ $owner }}</td>,
                 <td>Price: {{ $product->price }}$</td> 
                 <td>| Added:  {{ $product->created_at->diffForHumans() }}</td>
-                <td>| </td>
+                @if ($product->user_id == auth()->user()->id)
+                    <form method="POST" action="{{ route('post.delete') }}">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $product->id }}">
+                        <input type="submit" value="DELETE">
+                    </form>
+                @endif
+                <td> </td>
             </tr><hr>
         @endforeach
         @endif
