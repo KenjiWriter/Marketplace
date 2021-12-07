@@ -22,7 +22,7 @@ class Profile extends Component
         $count = product::where('user_id',$this->user_id)->select('id')->get();
         $count_all = $count->count();
         $this->count_all = $count_all;
-        $products = product::where('user_id',$this->user_id)->simplePaginate(5);;
+        $products = product::where('user_id',$this->user_id)->simplePaginate(5);
         return view('livewire.profile',[
             'user' => $user,
             'products' => $products

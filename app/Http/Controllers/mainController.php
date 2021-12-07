@@ -76,6 +76,11 @@ class mainController extends Controller
             $product->category = $req->category;
         }
         $product->price = $req->price;
+        if(isset($req->active)) {
+            $product->Active = 0;
+        } else {
+            $product->Active = 1;
+        }
         $product->save();
         return redirect(route('profile', auth()->user()->id));
     }

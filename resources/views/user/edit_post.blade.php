@@ -18,6 +18,7 @@
         <label>Price</label>
         <input type="hidden" name="id" value="{{ $product->id }}">
         <input type="number" name="price" value="{{ $product->price }}" placeholder="Price"> <br> <br>
+        <label for="active">Hide announcement</label><input type="checkbox" name="active" id="active" @if($product->Active == 0) checked @endif> <br>
         <input type="submit" value="Edit">
         </form>
     </fieldset>
