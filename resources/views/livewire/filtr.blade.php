@@ -18,27 +18,7 @@
         @foreach ($products as $product)
             <a href="{{ route('product_page', $product->id) }}">
             <tr>
-                <?php 
-                    switch ($product['category']) {
-                        case 1:
-                            $category = "Smartphones";
-                            break;
-                        case 2:
-                            $category = "Tablets";
-                            break;
-                        case 3:
-                            $category = "Computers";
-                            break;
-                        default:
-                            $category = "Other";
-                            break;
-                    }
-                    if($product['First_owner'] == 1) $owner = "YES"; else $owner = "NO";
-
-                ?>
                 <td>{{ $product->name }}</td>,
-                <td>{{ $category }}</td>,
-                <td>First owner: {{ $owner }}</td>,
                 <td>Price: {{ $product->price }}$</td></a>
                 <td>| Added:  {{ $product->created_at->diffForHumans() }} by <a href="{{ route('profile', $product->user_id) }}">{{ $product->Owner }}</a></td>
             </tr><hr>

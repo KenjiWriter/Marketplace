@@ -28,8 +28,6 @@
                 ?>
                 <a href="{{ route('product_page', $product->id) }}">
                 <td>{{ $product->name }}</td>,
-                <td>{{ $category }}</td>,
-                <td>First owner: {{ $owner }}</td>,
                 <td>Price: {{ $product->price }}$</td> 
                 </a>
                 <td>| Added:  {{ $product->created_at->diffForHumans() }}</td>
