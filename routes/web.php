@@ -16,9 +16,10 @@ use App\Http\Controllers\mainController;
 
 Route::get('/', [mainController::class, 'index'])->name('index');
 Route::get('/user/profile/{id}', [mainController::class, 'profile'])->name('profile');
+Route::get('/{product_id}', [mainController::class, 'product_page'])->name('product_page');
 Route::group(['middleware'=>['authCheck']], function(){
     Route::get('/auth', [mainController::class, 'auth'])->name('auth');
     Route::get('/post/add', [mainController::class, 'add'])->name('post.add');
     Route::get('/user/post/{id}', [mainController::class, 'show'])->name('post.show');
-    Route::get('/post/delete/{id}', [mainController::class, 'delete'])->name('delete');
+    Route::post('/post/delete', [mainController::class, 'delete'])->name('delete');
 });

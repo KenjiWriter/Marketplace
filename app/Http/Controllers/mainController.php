@@ -35,4 +35,9 @@ class mainController extends Controller
     {
         dd($req->all());
     }
+    public function product_page(request $req) 
+    {
+        $product = product::where('id',$req->product_id)->first();
+        return view('product_page', compact('product'));
+    }
 }
