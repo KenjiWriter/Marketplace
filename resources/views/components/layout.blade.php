@@ -15,6 +15,10 @@
         <a href="{{ route('post.add') }}">Create new announcement</a> |
         <a href="{{route('post.show',auth()->user()->id) }}">My announcement</a> |
         <a href="{{route('profile', auth()->user()->id) }}">Profile</a>
+        <form method="POST" action="{{ route('auth.logout') }}">
+            @csrf
+            <input type="submit" value="Logout">
+        </form>
             @else
             <a href="{{route('auth') }}">Login/Register</a>
         @endif

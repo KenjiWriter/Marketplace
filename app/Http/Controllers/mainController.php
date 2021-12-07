@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\product;
+use Auth;
 
 class mainController extends Controller
 {
@@ -31,9 +32,12 @@ class mainController extends Controller
         $id = $id;
         return view('profile', compact('id'));
     }
-    public function delete(request $req)
+    public function delete(Request $request)
     {
-        dd($req->all());
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
     public function product_page(request $req) 
     {
