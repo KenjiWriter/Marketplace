@@ -28,9 +28,6 @@
                 <td align="center"><label>Owner: </label> <a href="{{ route('profile', $product->user_id) }}">{{ $product->Owner }}</a></td>
                 <br> <br> <hr>
             </tr>
-            <form method="POST" action="{{ route('delate') }}">
-
-            </form>
             @else
             <h3>NO OUTPUT</h3>
         @endif

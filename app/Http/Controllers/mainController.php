@@ -10,27 +10,27 @@ class mainController extends Controller
 {
     public function index()
     {
-        return view('index');
+        return view('user.index');
     }
 
     public function auth()
     {
-        return view('home');
+        return view('user.home');
     }
 
     public function add()
     {
-        return view('add');
+        return view('user.add');
     }
     public function show($id)
     {
         $id = $id;
-        return view('showposts', compact('id'));
+        return view('user.showposts', compact('id'));
     }
     public function profile($id)
     {
         $id = $id;
-        return view('profile', compact('id'));
+        return view('user.profile', compact('id'));
     }
     public function delete(Request $request)
     {
@@ -42,6 +42,6 @@ class mainController extends Controller
     public function product_page(request $req) 
     {
         $product = product::where('id',$req->product_id)->first();
-        return view('product_page', compact('product'));
+        return view('user.product_page', compact('product'));
     }
 }

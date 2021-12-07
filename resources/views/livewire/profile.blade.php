@@ -31,6 +31,7 @@
                 <td>First owner: {{ $owner }}</td>,
                 <td>Price: {{ $product->price }}$</td> 
                 <td>| Added:  {{ $product->created_at->diffForHumans() }}</td>
+                <td>| </td>
             </tr><hr>
         @endforeach
         @endif
