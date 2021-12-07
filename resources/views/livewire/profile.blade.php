@@ -42,7 +42,9 @@
                 <td> </td>
             </tr><hr>
         @endforeach
+        {{ $products->links() }}
         @endif
+
     @else
         <h3>NO OUTPUT</h3>
     @endif
