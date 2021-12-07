@@ -26,10 +26,12 @@
                     if($product['First_owner'] == 1) $owner = "YES"; else $owner = "NO";
 
                 ?>
+                <a href="{{ route('product_page', $product->id) }}">
                 <td>{{ $product->name }}</td>,
                 <td>{{ $category }}</td>,
                 <td>First owner: {{ $owner }}</td>,
                 <td>Price: {{ $product->price }}$</td> 
+                </a>
                 <td>| Added:  {{ $product->created_at->diffForHumans() }}</td>
                 @if ($product->user_id == auth()->user()->id)
                     <form method="POST" action="{{ route('post.delete') }}">
@@ -37,6 +39,7 @@
                         <input type="hidden" name="id" value="{{ $product->id }}">
                         <input type="submit" value="DELETE">
                     </form>
+                    <button><a href="{{ route('post.edit', $product->id) }}">EDIT</a></button>
                 @endif
                 <td> </td>
             </tr><hr>

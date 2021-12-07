@@ -24,6 +24,8 @@ Route::group(['middleware'=>['authCheck']], function(){ //To access these pages,
     Route::post('/auth/logout', [mainController::class, 'logout'])->name('auth.logout');
     //User
     Route::get('/post/add', [mainController::class, 'add'])->name('post.add');
+    Route::get('/post/edit/{id}', [mainController::class, 'post_edit_get'])->name('post.edit');
+    Route::post('/post/edit', [mainController::class, 'post_edit_post'])->name('post.edit2');
     Route::get('/user/post/{id}', [mainController::class, 'show'])->name('post.show');
-    Route::post('/post/', [mainController::class, 'post_delete'])->name('post.delete');
+    Route::post('/post/delete', [mainController::class, 'post_delete'])->name('post.delete');
 });

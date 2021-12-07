@@ -22,16 +22,19 @@ class mainController extends Controller
     {
         return view('user.add');
     }
+
     public function show($id)
     {
         $id = $id;
         return view('user.showposts', compact('id'));
     }
+
     public function profile($id)
     {
         $id = $id;
         return view('user.profile', compact('id'));
     }
+
     public function logout(Request $request)
     {
         Auth::logout();
@@ -39,11 +42,44 @@ class mainController extends Controller
         $request->session()->regenerateToken();
         return redirect('/');
     }
+
     public function post_delete(Request $req)
     {
         product::where('id',$req->id)->delete();
         return back();
     }
+
+    public function post_edit_get(Request $req)
+    {
+        $product = product::where('id', $req->id)->first();
+        if(auth()->user()->id != $product->user_id) {
+            return view('/');
+        }
+        return view('user.edit_post', compact('product'));
+    }
+
+    public function post_edit_post(Request $req)
+    {
+        $product = product::where('id', $req->id)->first();
+        if(auth()->user()->id != $product->user_id) {
+            return view('/');
+        }
+        $product->name = $req->title;
+        if(isset($req->first_owner)) {
+            $product->First_owner = 1;
+        } else {
+            $product->First_owner = 0;
+        }
+        if($req->category == 0) {
+            $product->category = 4;
+        } else {
+            $product->category = $req->category;
+        }
+        $product->price = $req->price;
+        $product->save();
+        return redirect(route('profile', auth()->user()->id));
+    }
+
     public function product_page(request $req) 
     {
         $product = product::where('id',$req->product_id)->first();
