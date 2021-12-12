@@ -36,6 +36,7 @@ class Filtr extends Component
         })
         ->where('Active',1)
         ->where('name','like',"%$search%")
+        ->orderBy('promote', 'desc')
         ->simplePaginate(10);
         return view('livewire.filtr', [
             'products' => $products

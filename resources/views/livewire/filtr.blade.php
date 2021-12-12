@@ -16,12 +16,22 @@
     <hr>
     @if ($products || $products->count() > 0)
         @foreach ($products as $product)
-            <a href="{{ route('product_page', $product->id) }}">
-            <tr>
-                <td>{{ $product->name }}</td>,
-                <td>Price: {{ $product->price }}$</td></a>
-                <td>| Added:  {{ $product->created_at->diffForHumans() }} by <a href="{{ route('profile', $product->user_id) }}">{{ $product->Owner }}</a></td>
-            </tr><hr>
+            @if ($product->promote == 1)
+                <b><u style="color: gold;"><span style="color: gold;">PROMOTING</span>!</u></b>
+                <a href="{{ route('product_page', $product->id) }}">
+                <tr style="background-color: blue;">
+                    <td>{{ $product->name }}</td>,
+                    <td>Price: {{ $product->price }}$</td></a>
+                    <td>| Added:  {{ $product->created_at->diffForHumans() }} by <a href="{{ route('profile', $product->user_id) }}">{{ $product->Owner }}</a></td>
+                </tr><hr>
+                @else
+                <a href="{{ route('product_page', $product->id) }}">
+                <tr>
+                    <td>{{ $product->name }}</td>,
+                    <td>Price: {{ $product->price }}$</td></a>
+                    <td>| Added:  {{ $product->created_at->diffForHumans() }} by <a href="{{ route('profile', $product->user_id) }}">{{ $product->Owner }}</a></td>
+                </tr><hr>
+            @endif
         @endforeach
         {{ $products->links() }}
         @else
