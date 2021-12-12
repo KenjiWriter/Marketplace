@@ -11,13 +11,9 @@ class Profile extends Component
     public $user_id;
     public $count_all;
 
-    public function delete($id)
-    {
-        product::find($id)->delete();
-    }
-
     public function render()
     {
+
         $user = User::where('id', $this->user_id)->first();
         $count = product::where('user_id',$this->user_id)->select('id')->get();
         $count_all = $count->count();
