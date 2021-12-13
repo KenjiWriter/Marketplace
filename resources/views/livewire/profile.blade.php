@@ -7,6 +7,13 @@
             <?php $user_id = auth()->user()->id; ?>
         @endif
             <h3 align="center">Profile {{ $user->name }}</h3>
+            @if ($user->profile_status == 0 and $user_id != $user->id)
+                <h3>THIS PROFILE IS SET TO PRIVATE!</h3>
+            @else
+            @if ($user_id == $user->id)
+                <b><label for="status">Private profil </label></b>
+                <input type="checkbox" name="status" id="status" value="1" wire:click="setStatus"  wire:model.defer="status"> <br><br>
+            @endif
             Joined in: {{ $user->created_at->toFormattedDateString() }} <br>
             @if($products && $count_all > 0)
                 Announcements: {{ $count_all }} <br>
@@ -43,11 +50,7 @@
                             <td>| NOT ACTIVE |</td>
                         @endif
                         @if ($product->user_id == $user_id)
-                            <form method="POST" action="{{ route('post.delete') }}">
-                                @csrf
-                                <input type="hidden" name="id" value="{{ $product->id }}">
-                                <input type="submit" value="DELETE">
-                            </form>
+                            <button wire:click.prevent="delete('{{ $product->id }}')">DELETE</button>
                             <button><a href="{{ route('post.edit', $product->id) }}">EDIT</a></button>
                         @endif
                         <td> </td>
@@ -55,6 +58,7 @@
                 @endif
                 @endforeach
                 {{ $products->links() }}
+            @endif
         @endif
     @else
         <h3>NO OUTPUT</h3>
