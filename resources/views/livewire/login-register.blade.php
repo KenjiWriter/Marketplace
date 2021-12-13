@@ -68,6 +68,8 @@
                         </div>
                     </div>
                     <div class="col-md-12 text-center">
+                        <label for="remember">Remember me</label>
+                        <input type="checkbox" wire:model="remember" name="remember" value="1">
                         <button class="btn text-white btn-success" wire:click.prevent="login">Login</button>
                     </div>
                     <div class="col-md-12">

@@ -8,7 +8,7 @@ use App\Models\User;
 
 class LoginRegister extends Component
 {
-    public $users, $email, $password, $name;
+    public $users, $email, $password, $name, $remember;
     public $registerForm = false;
 
     public function render()
@@ -24,12 +24,16 @@ class LoginRegister extends Component
 
     public function login()
     {
+        if($this->remember == 1) {
+            $remember = true;
+        } else {
+            $remember = false;
+        }
         $validatedDate = $this->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        
-        if(\Auth::attempt(array('email' => $this->email, 'password' => $this->password))){
+        if (\Auth::attempt(['email' => $this->email, 'password' => $this->password], $remember)) {
                 session()->flash('message', "You are Login successful.");
                 return redirect('/');
         }else{
