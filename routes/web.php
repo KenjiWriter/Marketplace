@@ -13,7 +13,6 @@ use App\Http\Controllers\mainController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['middleware'=>['promotingCheck']], function(){ // Check all promoted post if still are valid
     Route::get('/', [mainController::class, 'index'])->name('index');
     Route::get('/user/profile/{id}', [mainController::class, 'profile'])->name('profile');
     Route::get('/announcement/{product_id}', [mainController::class, 'product_page'])->name('product_page');
@@ -29,4 +28,3 @@ Route::group(['middleware'=>['promotingCheck']], function(){ // Check all promot
         Route::get('/user/post/{id}', [mainController::class, 'show'])->name('post.show');
         Route::post('/post/delete', [mainController::class, 'post_delete'])->name('post.delete');
     });
-});

@@ -9,6 +9,27 @@ class product extends Model
 {
     use HasFactory;
 
+    function CheckPromoting($id) {
+        $product = product::find($id);
+        if($product->promote_to != NULL) {
+            $promote_to = $product->promote_to;
+            $promoting = now()->lt($promote_to);
+        } else {
+            $promoting = false;
+            $promote_to = NULL;
+        }
+        if($promoting == false) {
+            $product->promote = 0;
+            $product->promote_to = $promote_to;
+            $product->save();
+        } else {
+            $product->promote = 1;
+            $product->promote_to = $promote_to;
+            $product->save();
+        }
+        
+    }
+
     protected $fillable = [
         'Owner',
         'user_id',
@@ -17,5 +38,7 @@ class product extends Model
         'price',
         'category',
         'First_owner',
+        'promote',
+        'promote_to',
     ];
 }

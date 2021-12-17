@@ -19,6 +19,9 @@
                 Announcements: {{ $count_all }} <br>
                 Active announcements: <br> 
                 @foreach ($products as $product)
+                    <?php 
+                    $product->CheckPromoting($product->id);
+                    ?>
                     @if ($product->Active == 0 && $product->user_id != $user_id)
                     <?php continue; ?>
                     @else

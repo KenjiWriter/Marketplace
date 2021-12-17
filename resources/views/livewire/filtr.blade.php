@@ -16,6 +16,9 @@
     <hr>
     @if ($products || $products->count() > 0)
         @foreach ($products as $product)
+            <?php 
+                $product->CheckPromoting($product->id);
+            ?>
             @if ($product->promote == 1)
                 <b><u style="color: gold;"><span style="color: gold;">PROMOTING</span>!</u></b>
                 <a href="{{ route('product_page', $product->id) }}">
