@@ -27,4 +27,6 @@ use App\Http\Controllers\mainController;
         Route::post('/post/edit', [mainController::class, 'post_edit_post'])->name('post.edit2');
         Route::get('/user/post/{id}', [mainController::class, 'show'])->name('post.show');
         Route::post('/post/delete', [mainController::class, 'post_delete'])->name('post.delete');
+        Route::get('/add_balance', [mainController::class, 'balance'])->name('balance');
+        Route::post('/balance/add', [mainController::class, 'balance_add'])->name('balance.add');
     });

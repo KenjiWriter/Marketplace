@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\product;
 use Auth;
+use App\Models\user;
 
 class mainController extends Controller
 {
@@ -84,6 +85,31 @@ class mainController extends Controller
         $product->save();
         return redirect(route('profile', auth()->user()->id));
     }
+
+    public function balance()
+    {
+        return view('user.balance');
+    }
+
+    public function balance_add(Request $req)
+    {
+        $deposit = $req->amount;
+        if(!isset($deposit) or empty($deposit)) {
+            return back()->with('message', 'Deposit amount cannot be empty!');
+        }
+        if($deposit < 5) {
+            return back()->with('message', 'Deposit cannot be lower then 5$!');
+        }
+
+        //Here will be paywall gate
+
+        $user = user::find(auth()->user()->id);
+        $user->balance += $deposit;
+        $user->save();
+        return back()->with('success', 'deposit successful added to account!');
+
+    }
+
 
     public function product_page(request $req) 
     {
