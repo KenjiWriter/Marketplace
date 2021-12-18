@@ -9,7 +9,8 @@ class product extends Model
 {
     use HasFactory;
 
-    function CheckPromoting($id) {
+    function CheckPromoting($id) 
+    {
         $product = product::find($id);
         if($product->promote_to != NULL) {
             $promote_to = $product->promote_to;
@@ -27,7 +28,26 @@ class product extends Model
             $product->promote_to = $promote_to;
             $product->save();
         }
-        
+    }
+
+    function categoryName($id)
+    {
+        $product = product::where('id', $id)->select('category')->first();
+        switch ($product->category) {
+            case 1:
+                $category = "Smartphones";
+                break;
+            case 2:
+                $category = "Tablets";
+                break;
+            case 3:
+                $category = "Computers";
+                break;
+            default:
+                $category = "Other";
+                break;
+        }
+        return $category;
     }
 
     protected $fillable = [

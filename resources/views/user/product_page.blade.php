@@ -4,20 +4,7 @@
         <legend>System by <a href="https://github.com/KenjiWriter">@Wenzzi</a></legend>
         @if (isset($product))
             <?php 
-                switch ($product['category']) {
-                    case 1:
-                        $category = "Smartphones";
-                        break;
-                    case 2:
-                        $category = "Tablets";
-                        break;
-                    case 3:
-                        $category = "Computers";
-                        break;
-                    default:
-                        $category = "Other";
-                        break;
-                }
+                $category = $product->categoryName($product->id);
                 if($product['First_owner'] == 1) $owner = "YES"; else $owner = "NO";
             ?>
             <tr>

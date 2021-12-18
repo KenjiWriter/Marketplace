@@ -25,27 +25,13 @@
                 @endif
                 @foreach ($products as $product)
                     <?php 
-                    $product->CheckPromoting($product->id);
+                        $product->CheckPromoting($product->id);
                     ?>
                     @if ($product->Active == 0 && $product->user_id != $user_id)
                     <?php continue; ?>
                     @else
                     <tr>
                         <?php 
-                            switch ($product['category']) {
-                                case 1:
-                                    $category = "Smartphones";
-                                    break;
-                                case 2:
-                                    $category = "Tablets";
-                                    break;
-                                case 3:
-                                    $category = "Computers";
-                                    break;
-                                default:
-                                    $category = "Other";
-                                    break;
-                            }
                             if($product['First_owner'] == 1) $owner = "YES"; else $owner = "NO";
         
                         ?>
