@@ -9,6 +9,8 @@ class product extends Model
 {
     use HasFactory;
 
+    protected $dates = ['created_at', 'updated_at', 'promote_to'];
+
     function CheckPromoting($id) 
     {
         $product = product::find($id);

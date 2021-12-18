@@ -29,4 +29,6 @@ use App\Http\Controllers\mainController;
         Route::post('/post/delete', [mainController::class, 'post_delete'])->name('post.delete');
         Route::get('/add_balance', [mainController::class, 'balance'])->name('balance');
         Route::post('/balance/add', [mainController::class, 'balance_add'])->name('balance.add');
+        Route::get('/promote/{id}', [mainController::class, 'promote'])->name('promote');
+        Route::post('/promote/add', [mainController::class, 'promote_add'])->name('promote.add');
     });

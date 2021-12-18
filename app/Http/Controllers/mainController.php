@@ -110,6 +110,70 @@ class mainController extends Controller
 
     }
 
+    public function promote(Request $req)
+    {
+        $product = product::where('id', $req->id)->first();
+        if(auth()->user()->id == $product->user_id) {
+            if(now()->lt($product->promote_to) == true) {
+                $promoting_to = $product->promote_to;
+            } else {
+                $promoting_to = '';
+            }
+            return view('user.promote')->with('promoting_to', $promoting_to)->with('id', $req->id);
+        } else {
+            return back();
+        }
+    }
+
+    public function promote_add(Request $req)
+    {
+        $product = product::find($req->id);
+        $user = auth()->user();
+        $user = user::where('id',$user->id)->first();
+        if($user->id == $product->user_id) {
+            switch ($req->days) {
+                case 3:
+                    if($user->balance >= 5) {
+                        $days = 3;
+                        $balance = 5;
+                    } else {
+                        return back()->with('balance', 'not enought balance <a>.</a>');
+                    }
+                    break;
+                case 14:
+                    if($user->balance >= 15) {
+                        $days = 14;
+                        $balance = 15;
+                    } else {
+                        return back()->with('balance', 'not enought balance <a>.</a>');
+                    }
+                    break;
+                case 30:
+                    if($user->balance >= 30) {
+                        $days = 30;
+                        $balance = 30;
+                    } else {
+                        return back()->with('balance', 'not enought balance <a>.</a>');
+                    }
+                    break;
+                default:
+                    return back()->with('message', 'Invalid days');
+                    break;
+            }
+            if(now()->lt($product->promote_to) == true and $product->promote_to != NULL) {
+                $product->promote_to = $product->promote_to->addDays($days);
+            } else {
+                $product->promote_to = now()->addDays($days);
+            }
+            $user->balance -= $balance;
+            $product->save();
+            $user->save();
+            return back()->with('success', 'Promoting successfully bought');
+        } else {
+            return back();
+        }
+    }
+
 
     public function product_page(request $req) 
     {

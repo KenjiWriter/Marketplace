@@ -31,10 +31,6 @@
                     <?php continue; ?>
                     @else
                     <tr>
-                        <?php 
-                            if($product['First_owner'] == 1) $owner = "YES"; else $owner = "NO";
-        
-                        ?>
                         <a href="{{ route('product_page', $product->id) }}">
                         <td>{{ $product->name }}</td>,
                         <td>Price: {{ $product->price }}$</td> 
@@ -46,8 +42,8 @@
                         @if ($product->user_id == $user_id)
                             <button wire:click.prevent="delete('{{ $product->id }}')">DELETE</button>
                             <button><a href="{{ route('post.edit', $product->id) }}">EDIT</a></button>
+                            <button><a href="{{ route('promote', $product->id) }}">PROMOTE</a></button>
                         @endif
-                        <td> </td>
                     </tr><hr>
                 @endif
                 @endforeach
