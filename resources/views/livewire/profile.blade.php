@@ -12,7 +12,7 @@
             @else
             @if ($user_id == $user->id)
                 <b><label for="status">Private profil </label></b>
-                <input type="checkbox" name="status" id="status" value="1" wire:model.defer="status"> <br><br>
+                <input type="checkbox" name="status" id="status" value="1" wire:model.defer="status" wire:click.prevent="setStatus"> <br><br>
             @endif
             Joined in: {{ $user->created_at->toFormattedDateString() }} <br>
             @if($products && $count_all > 0)

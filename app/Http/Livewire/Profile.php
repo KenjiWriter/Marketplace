@@ -24,18 +24,25 @@ class Profile extends Component
         }
     }
 
+    function setStatus()
+    {
+        $user = user::find($this->user_id);
+        if($user->profile_status == 1) {
+            $user->profile_status = 0;
+        } else {
+            $user->profile_status = 1;
+        }
+        $user->save();
+    }
+
     public function render()
     {
         $user = user::where('id',$this->user_id)->first();
         $this->user = $user;
         if($user->profile_status == 0) {
-            $this->status = false;
-            $user->profile_status = 1;
-            $user->save();
-        } else {
             $this->status = true;
-            $user->profile_status = 0;
-            $user->save();
+        } else {
+            $this->status = false;
         }
         $count = product::where('user_id',$this->user_id)->select('id')->get();
         $count_all = $count->count();
