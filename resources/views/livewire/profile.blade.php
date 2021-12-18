@@ -18,6 +18,11 @@
             @if($products && $count_all > 0)
                 Announcements: {{ $count_all }} <br>
                 Active announcements: <br> 
+                @if (session()->has('error'))
+                    <div>
+                        <small style="color: red;">{{ session('error') }}</small>
+                    </div>
+                @endif
                 @foreach ($products as $product)
                     <?php 
                     $product->CheckPromoting($product->id);

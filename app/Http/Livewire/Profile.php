@@ -17,10 +17,10 @@ class Profile extends Component
             if($product->user_id == \Auth()->user()->id) {
                 $product->delete();
             } else {
-                dd('NOT WITH ME YOU FOOL :)');
+                session()->flash('error', 'The user id are invalid.');
             }
         } else {
-            dd('Somethink went wrong');
+            session()->flash('error', 'Somethink went wrong, try again later.');
         }
     }
 
