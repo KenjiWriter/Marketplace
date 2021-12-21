@@ -11,6 +11,7 @@ class Filtr extends Component
     public $search;
     public $category = null;
     public $first_owner = null;
+    public $has_photo = null;
     public $price_min = null;
     public $price_max = null;
 
@@ -27,6 +28,9 @@ class Filtr extends Component
         })
         ->when($this->first_owner, function($query) {
             $query->where('First_owner',1);
+        })
+        ->when($this->has_photo, function($query) {
+            $query->where('images','!=','NULL');
         })
         ->when($this->price_min, function($query) {
             $query->where('price', '>=', $this->price_min);
