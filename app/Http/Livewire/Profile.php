@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\product;
+use File;
 
 class Profile extends Component
 {
@@ -15,6 +16,16 @@ class Profile extends Component
         $product = product::where('id', $id)->first();
         if(isset($product)) {
             if($product->user_id == \Auth()->user()->id) {
+                if($product->images != NULL) {
+                    $images = json_decode($product->images, true);
+                    foreach($images as $image) {
+                        if(File::exists(public_path('storage/images/'.$image))){
+                            File::delete(public_path('storage/images/'.$image));
+                        }else{
+                            session()->flash('error', 'The image was not found. '.$image);
+                        }
+                    }
+                }
                 $product->delete();
             } else {
                 session()->flash('error', 'The user id are invalid.');
