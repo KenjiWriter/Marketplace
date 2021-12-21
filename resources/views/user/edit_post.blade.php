@@ -22,7 +22,7 @@
         <input type="submit" value="Edit">
         </form>
         <hr>
-        @livewire('removeimages', ['product' => $product])
+        @livewire('imagesmenager', ['product' => $product])
     </fieldset>
     @endsection
 </x-layout>

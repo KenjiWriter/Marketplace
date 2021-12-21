@@ -6,7 +6,7 @@ use Livewire\Component;
 use App\Models\product;
 use File;
 
-class Removeimages extends Component
+class Imagesmenager extends Component
 {
     public $images, $product;
 
@@ -31,6 +31,6 @@ class Removeimages extends Component
     {
         $images = $this->product->outPutImages($this->product->id);
         $this->images = $images;
-        return view('livewire.removeimages');
+        return view('livewire.imagesmenager');
     }
 }
