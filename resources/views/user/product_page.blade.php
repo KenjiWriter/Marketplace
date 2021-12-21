@@ -6,8 +6,19 @@
             <?php 
                 $category = $product->categoryName($product->id);
                 if($product['First_owner'] == 1) $owner = "YES"; else $owner = "NO";
+                $images = $product->outPutImages($product->id);
+                if($images == NULL) {
+                    $img = 'noImg.jpg';
+                }
             ?>
             <tr>
+                @if (!isset($img))
+                    @foreach ($images as $image)
+                        <img style="width: 150px; height=100px;" src="{{ asset('storage/images/'.$image) }}" alt="{{ $image }}">
+                    @endforeach
+                    @else
+                    <img style="width: 150px; height=100px;" src="{{ asset('storage/images/'.$img) }}" alt="{{ $img }}">
+                @endif <br>
                 <td><label>Product name: {{ $product->name }}</label></td><br>
                 <td><label>Category: {{ $category }}</label></td><br>
                 <td><label>First owner: {{ $owner }}</label></td><br>
