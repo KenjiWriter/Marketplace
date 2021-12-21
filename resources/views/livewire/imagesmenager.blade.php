@@ -1,8 +1,15 @@
 <div>
     <div>
         <h3>Add new images: </h3>
-        <input type="file" id="file" wire:model="photos" multiple>
+        <input type="file" id="file" wire:model="photos" multiple> <br> <br>
+        <button wire:click="addPhotos()">Add</button>
+        @if (session()->has('success_add'))
+        <div align="center">
+            {{ session('success_add') }}
+        </div>
+    @endif
     </div>
+    <hr>
     <h3>Images: </h3>
     @if (session()->has('error'))
         <div align="center">
