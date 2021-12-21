@@ -11,14 +11,22 @@
         <option value="2">Tablets</option>
         <option value="3">Computers</option>
     </select>
-    <label for="first_owner">| First owner?</label> <input id="first_owner" type="checkbox" wire:model="first_owner"> <br>
+    <label for="first_owner">| First owner?</label> <input id="first_owner" type="checkbox" wire:model="first_owner">
+    <label for="has_photo">| Only with photos</label> <input id="has_photo" type="checkbox" wire:model="has_photo"> <br>
     <input type="text" style="width: 30px;" wire:model="price_min" placeholder="Min">$-<input style="width: 30px;" type="text" wire:model="price_max" placeholder="Max">$
     <hr>
     @if ($products || $products->count() > 0)
         @foreach ($products as $product)
             <?php 
                 $product->CheckPromoting($product->id);
+                $images = $product->outPutImages($product->id);
+                if($images != NULL) {
+                    $img = $images[0];
+                } else {
+                    $img = 'noImg.jpg';
+                }
             ?>
+            <a href="{{ route('product_page', $product->id) }}"><img src="{{ asset('storage/images/'.$img) }}" style="width: 100px; height=50px;" alt="{{ $img }}"></a> <br>
             @if ($product->promote == 1)
                 <b><u style="color: gold;"><span style="color: gold;">PROMOTING</span>!</u></b>
                 <a href="{{ route('product_page', $product->id) }}">

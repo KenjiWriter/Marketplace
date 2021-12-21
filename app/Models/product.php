@@ -52,6 +52,13 @@ class product extends Model
         return $category;
     }
 
+    function outPutImages($id)
+    {
+        $product = product::where('id', $id)->select('images')->first();
+        $images = json_decode($product->images, true);
+        return $images;
+    }
+
     protected $fillable = [
         'Owner',
         'user_id',
