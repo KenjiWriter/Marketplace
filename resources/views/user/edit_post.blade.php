@@ -2,7 +2,7 @@
     @section('content')
     <fieldset>
         <legend>System by <a href="https://github.com/KenjiWriter">@Wenzzi</a></legend>
-        <form method="POST" action="{{ route('post.edit2') }}">
+        <form method="POST" action="{{ route('post.edit2') }}" enctype="multipart/form-data">
         @csrf
         <label>Title</label>
         <input type="text" value="{{ $product->name }}" name="title" placeholder="title"><br>
@@ -18,9 +18,11 @@
         <label>Price</label>
         <input type="hidden" name="id" value="{{ $product->id }}">
         <input type="number" name="price" value="{{ $product->price }}" placeholder="Price"> <br> <br>
-        <label for="active">Hide announcement</label><input type="checkbox" name="active" id="active" @if($product->Active == 0) checked @endif> <br>
+        <label for="active">Hide announcement</label><input type="checkbox" name="active" id="active" @if($product->Active == 0) checked @endif> <br> <br>
         <input type="submit" value="Edit">
         </form>
+        <hr>
+        @livewire('removeimages', ['product' => $product])
     </fieldset>
     @endsection
 </x-layout>
