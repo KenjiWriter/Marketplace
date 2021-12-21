@@ -8,12 +8,7 @@ use Carbon\Carbon;
 
 class Filtr extends Component
 {
-    public $search;
-    public $category = null;
-    public $first_owner = null;
-    public $has_photo = null;
-    public $price_min = null;
-    public $price_max = null;
+    public $search, $category = null, $sort = null, $first_owner = null, $has_photo = null, $price_min = null, $price_max = null;
 
     public function render()
     {
@@ -41,6 +36,18 @@ class Filtr extends Component
         ->where('Active',1)
         ->where('name','like',"%$search%")
         ->orderBy('promote', 'desc')
+        ->when($this->sort == 1, function($query) {
+            $query->orderBy('price', 'asc');
+        })
+        ->when($this->sort == 2, function($query) {
+            $query->orderBy('price', 'desc');
+        })
+        ->when($this->sort == 3, function($query) {
+            $query->orderBy('created_at', 'asc');
+        })
+        ->when($this->sort == 4, function($query) {
+            $query->orderBy('created_at', 'desc');
+        })
         ->simplePaginate(10);
         return view('livewire.filtr', [
             'products' => $products

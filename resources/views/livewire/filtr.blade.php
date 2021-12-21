@@ -13,7 +13,15 @@
     </select>
     <label for="first_owner">| First owner?</label> <input id="first_owner" type="checkbox" wire:model="first_owner">
     <label for="has_photo">| Only with photos</label> <input id="has_photo" type="checkbox" wire:model="has_photo"> <br>
-    <input type="text" style="width: 30px;" wire:model="price_min" placeholder="Min">$-<input style="width: 30px;" type="text" wire:model="price_max" placeholder="Max">$
+    <input type="text" style="width: 30px;" wire:model="price_min" placeholder="Min">$-<input style="width: 30px;" type="text" wire:model="price_max" placeholder="Max">$<br>
+    <span>Sort by</span>
+    <select wire:model="sort">
+        <option value="0">Don't sort</option>
+        <option value="1">Price Asc</option>
+        <option value="2">Price Dsc</option>
+        <option value="3">Oldest</option>
+        <option value="4">Newest</option>
+    </select>
     <hr>
     @if ($products || $products->count() > 0)
         @foreach ($products as $product)
