@@ -26,12 +26,19 @@
                 @foreach ($products as $product)
                     <?php 
                         $product->CheckPromoting($product->id);
+                        $images = $product->outPutImages($product->id);
+                        if($images != NULL) {
+                            $img = $images[0];
+                        } else {
+                            $img = 'noImg.jpg';
+                        }
                     ?>
                     @if ($product->Active == 0 && $product->user_id != $user_id)
                     <?php continue; ?>
                     @else
                     <tr>
                         <a href="{{ route('product_page', $product->id) }}">
+                        <img src="{{ asset('storage/images/'.$img) }}" style="width: 100px; height=50px;" alt="{{ $img }}"><br>
                         <td>{{ $product->name }}</td>,
                         <td>Price: {{ $product->price }}$</td> 
                         </a>
