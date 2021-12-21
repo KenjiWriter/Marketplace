@@ -15,8 +15,13 @@
             <option value="2">Tablets</option>
             <option value="3">Computers</option>
             <option value="4">Other</option>
-        </select> <br> <br>
+        </select> <br>
         <input type="number" wire:model="price" placeholder="Price"> <br> <br>
+        <label for="file">Upload photos: </label>
+        <input type="file" id="file" wire:model="photos" multiple>
+        @error('photo') <span style="color: red;">{{ $message }}</span> @enderror
+        <div wire:loading wire:target="photo">Uploading...</div>
+        <br><br>
         <button wire:click.prevent="add">Add announcement</button>
     </fieldset>
 </div>

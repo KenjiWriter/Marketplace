@@ -58,6 +58,7 @@ class product extends Model
         'name',
         'Active',
         'price',
+        'images',
         'category',
         'First_owner',
         'promote',
