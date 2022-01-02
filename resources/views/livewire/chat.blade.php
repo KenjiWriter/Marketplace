@@ -7,8 +7,8 @@
         @endif</h2>
         <small><a href="{{ route("product_page", $messages[0]->product_id) }}">{{ $product->name }}</a></small>
     </div>
-
-    @foreach ($messages as $message)
+    <div wire:poll.30000ms>
+        @foreach ($messages as $message)
             @if ($messages[0]->buyer == $message->sender)
                 <?php 
                     $name = $buyer->name;
@@ -20,8 +20,11 @@
                     $id = $messages[0]->seller;
                 ?>
             @endif
-            <div @if ($message->sender == auth()->user()->id) align="right" @else align="left" @endif  title="[{{ $message->created_at }}]"><a href="{{ route('profile', $id) }}">{{ $name }}</a>: {{ $message->message }}</div>
-    @endforeach
+            <div @if ($message->sender == auth()->user()->id) align="right" @else align="left" @endif  title="[{{ $message->created_at }}]">
+                <a href="{{ route('profile', $id) }}">{{ $name }}</a>: {{ $message->message }}
+            </div>
+        @endforeach
+    </div>
 
     <div align="center">
         <textarea wire:model="body" cols="30" rows="3"></textarea>
