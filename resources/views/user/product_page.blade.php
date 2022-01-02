@@ -24,7 +24,8 @@
                 <td><label>First owner: {{ $owner }}</label></td><br>
                 <td><label>Price: {{ $product->price }}$</label></td><br>
                 <td align="center"><label>Owner: </label> <a href="{{ route('profile', $product->user_id) }}">{{ $product->Owner }}</a></td>
-                <br> <br> <hr>
+                <br> <hr>
+                @livewire('message-seller', ['product_id' => $product->id, 'product_seller' => $product->user_id])
             </tr>
             @else
             <h3>NO OUTPUT</h3>

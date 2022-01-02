@@ -31,4 +31,6 @@ use App\Http\Controllers\mainController;
         Route::post('/balance/add', [mainController::class, 'balance_add'])->name('balance.add');
         Route::get('/promote/{id}', [mainController::class, 'promote'])->name('promote');
         Route::post('/promote/add', [mainController::class, 'promote_add'])->name('promote.add');
+        Route::get('/messages', [mainController::class, 'messages'])->name('messages');
+        Route::get('/messages/roomId/{roomId}', [mainController::class, 'chat'])->name('chat');
     });

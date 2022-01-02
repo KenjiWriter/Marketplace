@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\product;
 use Auth;
 use App\Models\user;
+use App\Models\message;
 
 class mainController extends Controller
 {
@@ -34,6 +35,22 @@ class mainController extends Controller
     {
         $id = $id;
         return view('user.profile', compact('id'));
+    }
+
+    public function product_page(request $req) 
+    {
+        $product = product::where('id',$req->product_id)->first();
+        return view('user.product_page', compact('product'));
+    }
+
+    public function balance()
+    {
+        return view('user.balance');
+    }
+
+    public function chat($roomId)
+    {
+        return view('user.chat')->with('roomId', $roomId);
     }
 
     public function logout(Request $request)
@@ -84,11 +101,6 @@ class mainController extends Controller
         }
         $product->save();
         return redirect(route('profile', auth()->user()->id));
-    }
-
-    public function balance()
-    {
-        return view('user.balance');
     }
 
     public function balance_add(Request $req)
@@ -174,10 +186,48 @@ class mainController extends Controller
         }
     }
 
-
-    public function product_page(request $req) 
+    public function messages()
     {
-        $product = product::where('id',$req->product_id)->first();
-        return view('user.product_page', compact('product'));
+        $buying = message::where('buyer', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        foreach($buying as $message) {
+            if(isset($collectionBuying)) {
+                foreach($collectionBuying as $i) {
+                    if($message->roomId == $i["roomId"]) {
+                        continue;
+                    } else {
+                        $collectionBuying[] = ['seller' => $message->seller, 'roomId' => $message->roomId, 'product' => $message->product_id, 'time' => $message->created_at];
+                    }
+                }
+            } else {
+                $collectionBuying[] = ['seller' => $message->seller, 'roomId' => $message->roomId, 'product' => $message->product_id, 'time' => $message->created_at];
+            }
+        }
+
+        $selling = message::where('seller', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        foreach($selling as $message) {
+            if(isset($collectionSelling)) {
+                foreach($collectionSelling as $i) {
+                    if($message->roomId == $i["roomId"]) {
+                        continue;
+                    } else {
+                        $collectionSelling[] = ['buyer' => $message->buyer, 'roomId' => $message->roomId, 'product' => $message->product_id, 'time' => $message->created_at];
+                    }
+                }
+            } else {
+                $collectionSelling[] = ['buyer' => $message->buyer, 'roomId' => $message->roomId, 'product' => $message->product_id, 'time' => $message->created_at];
+            }
+        }
+
+        if(empty($collectionBuying)) {
+            $collectionBuying = [];
+        }
+        if(empty($collectionSelling)) {
+            $collectionSelling = [];
+        }
+
+        return view('user.messages', [
+            'collectionBuying' => $collectionBuying,
+            'collectionSelling' => $collectionSelling,
+        ]);
     }
 }

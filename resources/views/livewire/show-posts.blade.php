@@ -1,7 +1,7 @@
 <fieldset>
+<legend>System by <a href="https://github.com/KenjiWriter">@Wenzzi</a> | {{ $product->Owner }} announcement</legend>
 @if ($products && $products->count() > 0)
         @foreach ($products as $product)
-        <legend>System by <a href="https://github.com/KenjiWriter">@Wenzzi</a> | {{ $product->Owner }} announcement</legend>
             <tr>
                 <?php 
                     switch ($product['category']) {
