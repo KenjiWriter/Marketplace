@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\message;
+use App\Models\user;
 use Auth;
 
 class MessageSeller extends Component
@@ -24,9 +25,20 @@ class MessageSeller extends Component
             } else {
                 $count = message::count();
                 $roomId = $count + 1;
+                $buyer = user::find(auth()->user()->id);
+                $accessible_rooms_buyer = json_decode($buyer->accessible_rooms, true);
+                $accessible_rooms_buyer[] = ['roomId' => $roomId];
+                $buyer->accessible_rooms = json_encode($accessible_rooms_buyer);
+
+                $seller = user::find($this->product_seller);
+                $accessible_rooms_seller = json_decode($seller->accessible_rooms, true);
+                $accessible_rooms_seller[] = ['roomId' => $roomId];
+                $seller->accessible_rooms = json_encode($accessible_rooms_seller);
             }
             $send_message = message::create(['roomId' => $roomId, 'product_id' => $this->product_id, 'sender' => auth()->user()->id, 'receiver' => $this->product_seller,'buyer' => auth()->user()->id, 'seller' => $this->product_seller, 'message' => $this->body]);
             if($send_message) {
+                $buyer->save();
+                $seller->save();
                 session()->flash('message', 'Message successfully sended!');
             } else {
                 session()->flash('message', 'Something went wrong! try again later.');
