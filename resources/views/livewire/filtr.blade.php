@@ -1,9 +1,5 @@
 <fieldset>
     <legend>System by <a href="https://github.com/KenjiWriter">@Wenzzi</a></legend>
-    @if (!Auth::guest())
-            Hi {{ auth()->user()->name }}! <a href="{{ route('post.add') }}">Add announcement</a>, <a href="user/post/{{ auth()->user()->id }}">My announcement</a>
-            <br>
-    @endif
     <input type="text" wire:model="search" placeholder="Search...">
     <select wire:model="category">
         <option value="0">All Category</option>

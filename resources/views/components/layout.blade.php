@@ -13,7 +13,6 @@
         <a href="{{ route('index') }}">Main page</a> |
         @if (!Auth::guest())
         <a href="{{ route('post.add') }}">Create new announcement</a> |
-        <a href="{{route('post.show',auth()->user()->id) }}">My announcement</a> |
         <a href="{{route('profile', auth()->user()->id) }}">Profile</a> |
         <a href="{{route('messages')}}">Messages</a> |
         <label for="balance">Balance: </label> <span>{{ auth()->user()->balance }}$</span> <a href="{{ route('balance') }}">Add balance</a>
