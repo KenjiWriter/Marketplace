@@ -11,7 +11,7 @@
                 @if (Cache::has('user-is-online-'. $user->id))
                 <small style="color: green;">Online</small>
                 @else
-                    <small style="color: red;">Offline</small>
+                    <small style="color: red;" title="last seen: {{ $user->last_seen->diffForHumans() }}">Offline</small>
                 @endif
             </div>
             @if ($user->profile_status == 0 and $user_id != $user->id)

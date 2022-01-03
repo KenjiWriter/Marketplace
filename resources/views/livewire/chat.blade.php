@@ -5,8 +5,18 @@
         <div align="center">
             <h2>Chat with @if ($messages[0]->buyer == auth()->user()->id)
                 {{ $seller->name }}
+                @if (Cache::has('user-is-online-'. $seller->id))
+                    <small style="color: green;">Online</small> <br>
+                    @else
+                    <small style="color: red;">Offline</small> <br>
+                @endif
                 @else
                 {{ $buyer->name }}
+                @if (Cache::has('user-is-online-'. $buyer->id))
+                    <small style="color: green;">Online</small> <br>
+                    @else
+                    <small style="color: red;">Offline</small> <br>
+                @endif
             @endif</h2>
             <small><a href="{{ route("product_page", $messages[0]->product_id) }}">{{ $product->name }}</a></small>
         </div>
