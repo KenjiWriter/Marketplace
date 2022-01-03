@@ -34,14 +34,18 @@ class Chat extends Component
     public function render()
     {
         $messages = message::where('roomId',$this->roomId)->get();
-        if($messages[0]->buyer == auth()->user()->id or $messages[0]->seller == auth()->user()->id) {
+        if(count($messages) > 0) {
+            if($messages[0]->buyer == auth()->user()->id or $messages[0]->seller == auth()->user()->id) {
+            } else {
+                session()->flash('error', '');
+            }
+    
+            $this->product = product::where('id', $messages[0]->product_id)->select('name','id')->first();
+            $this->seller = user::where('id', $messages[0]->seller)->select('name','id')->first();
+            $this->buyer = user::where('id', $messages[0]->buyer)->select('name','id')->first();
         } else {
-            exit('access denied');
+            session()->flash('error', '');
         }
-
-        $this->product = product::where('id', $messages[0]->product_id)->select('name','id')->first();
-        $this->seller = user::where('id', $messages[0]->seller)->select('name','id')->first();
-        $this->buyer = user::where('id', $messages[0]->buyer)->select('name','id')->first();
 
         return view('livewire.chat', [
             'messages' => $messages
