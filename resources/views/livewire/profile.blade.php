@@ -6,7 +6,14 @@
             @else
             <?php $user_id = auth()->user()->id; ?>
         @endif
-            <h3 align="center">Profile {{ $user->name }}</h3>
+            <div align="center">
+                <h3>Profile {{ $user->name }}</h3>
+                @if (Cache::has('user-is-online-'. $user->id))
+                <small style="color: green;">Online</small>
+                @else
+                    <small style="color: red;">Offline</small>
+                @endif
+            </div>
             @if ($user->profile_status == 0 and $user_id != $user->id)
                 <h3>THIS PROFILE IS SET TO PRIVATE!</h3>
             @else
