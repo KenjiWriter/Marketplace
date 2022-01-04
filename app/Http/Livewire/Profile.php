@@ -5,8 +5,9 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\product;
-use App\Models\messages;
+use App\Models\message;
 use File;
+use Auth;
 
 class Profile extends Component
 {
@@ -19,8 +20,40 @@ class Profile extends Component
             if($product->user_id == \Auth()->user()->id) {
                 //messages
                 $messages = message::where('product_id', $product->id)->get();
+                foreach($messages as $message) {
+                    $buyers[]   = ['id' => $message->buyer];   
+                    $roomsId[]  = ['id' => $message->roomId];
+                }
                 if(count($messages) > 0) {
-                    $messages->delete();
+                    //Removing rooms
+                    foreach($buyers as $buyer){
+                        $buyer = user::find($buyer["id"]);
+                        $accessible_rooms = json_decode($buyer->accessible_rooms, true);
+                        if($accessible_rooms != NULL) {
+                            foreach($accessible_rooms as $accessible_room) {
+                                foreach($roomsId as $roomId) {
+                                    if($accessible_room["roomId"] == $roomId) {
+                                        unset($accessible_room);
+                                    }
+                                }
+                            }
+                            $accessible_rooms = json_encode($accessible_rooms);
+                            $buyer->accessible_rooms = $accessible_rooms;
+                            $buyer->save();
+
+                        }
+                    }
+                    $user = user::find(auth()->user()->id);
+                    foreach(json_decode($user->accessible_rooms, true) as $accessible_room) {
+                        if($accessible_room["roomId"] == $roomId) {
+                            unset($accessible_room);
+                        }
+                    }
+                    $accessible_rooms = json_encode($accessible_rooms);
+                    $user->accessible_rooms = $accessible_rooms;
+                    $user->save();
+
+                    message::where('product_id', $product->id)->delete();
                 }
 
                 //Images

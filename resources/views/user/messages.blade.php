@@ -9,7 +9,7 @@
                 <?php 
                     $product = App\Models\product::where('id',$buying["product"])->select('name', 'Owner')->first();
                 ?>
-                <a href="{{ route('chat', $buying['roomId']) }}">{{ $product->name }} <small>from {{ $product->Owner }}</small></a> [Last message: {{ $buying['time'] }}]
+                <a href="{{ route('chat', $buying['roomId']) }}">{{ $product->name }} <small>from {{ $product->Owner }}</small></a> [Last message: {{ $buying['time'] }}] <br> <hr>
             @endforeach
         @endisset
         @isset($collectionSelling)
@@ -19,7 +19,7 @@
                 <?php 
                     $product = App\Models\product::where('id',$selling["product"])->select('name', 'Owner')->first();
                 ?>
-                <a href="{{ route('chat', $selling['roomId']) }}">{{ $product->name }}</a> [Last message: {{ $selling['time'] }}]
+                <a href="{{ route('chat', $selling['roomId']) }}">{{ $product->name }}</a> [Last message: {{ $selling['time'] }}] <br> <hr>
             @endforeach
         @endisset
     </fieldset>
