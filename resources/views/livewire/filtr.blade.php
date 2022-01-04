@@ -30,7 +30,7 @@
                     $img = 'noImg.jpg';
                 }
             ?>
-            <a href="{{ route('product_page', $product->id) }}"><img src="{{ asset('storage/images/'.$img) }}" style="width: 100px; height=50px;" alt="{{ $img }}"></a> <br>
+            <a href="{{ route('product_page', $product->id) }}"><img src="{{ asset("storage\images/".$img) }}" style="width: 100px; height=50px;" alt="{{ $img }}"></a> <br>
             @if ($product->promote == 1)
                 <b><u style="color: gold;"><span style="color: gold;">PROMOTING</span>!</u></b>
                 <a href="{{ route('product_page', $product->id) }}">
