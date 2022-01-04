@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\product;
+use App\Models\messages;
 use File;
 
 class Profile extends Component
@@ -16,6 +17,13 @@ class Profile extends Component
         $product = product::where('id', $id)->first();
         if(isset($product)) {
             if($product->user_id == \Auth()->user()->id) {
+                //messages
+                $messages = message::where('product_id', $product->id)->get();
+                if(count($messages) > 0) {
+                    $messages->delete();
+                }
+
+                //Images
                 if($product->images != NULL) {
                     $images = json_decode($product->images, true);
                     foreach($images as $image) {
