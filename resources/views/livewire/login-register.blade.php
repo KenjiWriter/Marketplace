@@ -42,6 +42,11 @@
                     <div class="col-md-12 text-center">
                         <button class="btn text-white btn-success" wire:click.prevent="registerStore">Register</button>
                     </div>
+                    <div class="col-md-12 text-center">
+                        Or Login via <br>
+                        <a href="{{ route('auth.facebook') }}">Facebook</a> or <a href="{{ route('auth.google') }}">Google</a>
+                    </div>
+                    <br>
                     <div class="col-md-12">
                         <a class="text-primary" wire:click.prevent="register"><strong style="cursor: pointer">Login</strong></a>
                     </div>
@@ -71,6 +76,10 @@
                         <label for="remember">Remember me</label>
                         <input type="checkbox" wire:model="remember" name="remember" value="1">
                         <button class="btn text-white btn-success" wire:click.prevent="login">Login</button>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        Or Login via <br>
+                        <a href="{{ route('auth.facebook') }}">Facebook</a> or <a href="{{ route('auth.google') }}">Google</a>
                     </div>
                     <div class="col-md-12">
                         Don't have account? <a class="btn btn-primary text-white" wire:click.prevent="register"><strong style="cursor: pointer">Register Here</strong></a>

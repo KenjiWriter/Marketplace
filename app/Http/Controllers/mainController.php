@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
 use App\Models\product;
 use Auth;
 use App\Models\user;
@@ -18,6 +19,48 @@ class mainController extends Controller
     public function auth()
     {
         return view('user.home');
+    }
+
+    //Facebook login
+    public function redirectToFacebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    //Facebook Callback
+    public function handleFacebookCallback()
+    {
+        $user = Socialite::driver('facebook')->user();
+        $this->_registerOrLoginUser($user);
+        return redirect()->route('index');
+    }
+
+    //Google login
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    //Google Callback
+    public function handleGoogleCallback()
+    {
+        $user = Socialite::driver('google')->user();
+        $this->_registerOrLoginUser($user);
+        return redirect()->route('index');
+    }
+
+    protected function _registerOrLoginUser($data)
+    {
+        $user = User::where('email', $data->email)->first();
+        if(!$user) {
+            $user = new User();
+            $user->provider_id = $data->id;
+            $user->name = $data->name;
+            $user->email = $data->email;
+            $user->avatar = $data->avatar;
+            $user->save();
+        }
+        Auth::login($user); 
     }
 
     public function add()
