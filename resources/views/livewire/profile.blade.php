@@ -17,6 +17,11 @@
             @if ($user->profile_status == 0 and $user_id != $user->id)
                 <h3>THIS PROFILE IS SET TO PRIVATE!</h3>
             @else
+            @isset($user->avatar)
+                <div align="center">
+                    <img style="border-radius: 50%; width: 250px; height=250px;" src="{{ url($user->avatar) }}" alt="">
+                </div>
+            @endisset
             @if ($user_id == $user->id)
                 <b><label for="status">Private profil </label></b>
                 <input type="checkbox" name="status" id="status" value="1" wire:model.defer="status" wire:click.prevent="setStatus"> <br><br>
