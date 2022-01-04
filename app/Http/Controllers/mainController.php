@@ -30,7 +30,7 @@ class mainController extends Controller
     //Facebook Callback
     public function handleFacebookCallback()
     {
-        $user = Socialite::driver('facebook')->user();
+        $user = Socialite::driver('facebook')->stateless()->user();
         $this->_registerOrLoginUser($user);
         return redirect()->route('index');
     }
@@ -44,7 +44,7 @@ class mainController extends Controller
     //Google Callback
     public function handleGoogleCallback()
     {
-        $user = Socialite::driver('google')->user();
+        $user = Socialite::driver('google')->stateless()->user();
         $this->_registerOrLoginUser($user);
         return redirect()->route('index');
     }
