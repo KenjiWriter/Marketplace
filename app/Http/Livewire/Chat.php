@@ -34,9 +34,10 @@ class Chat extends Component
     public function render()
     {
         $accessible_rooms = json_decode(auth()->user()->accessible_rooms, true);
+        $messages = NULL;
         if(count($accessible_rooms) > 0) {
             foreach($accessible_rooms as $accessible_room) {
-                if($accessible_room["roomId"] == $this->roomId) {
+                if($accessible_room['roomId'] == $this->roomId) {
                     $access = true;
                     break;
                 }

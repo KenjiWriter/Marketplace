@@ -248,7 +248,7 @@ class mainController extends Controller
 
         $selling = message::where('seller', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         foreach($selling as $message) {
-            if(isset($collectionSelling)) {
+            if(isset($collectionSelling)) { 
                 foreach($collectionSelling as $i) {
                     if($message->roomId == $i["roomId"]) {
                         continue;

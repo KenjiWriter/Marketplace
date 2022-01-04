@@ -20,23 +20,50 @@ class MessageSeller extends Component
             session()->flash('message', "You can't message to your self.");
         } else {
             $messages = message::where('sender', auth()->user()->id)->first();
-            if($messages == NULL) {
-                $roomId = $messages["roomId"];
+            if($messages != NULL) {
+                $roomId  = $messages["roomId"];
             } else {
                 $count   = message::count();
                 $roomId  = $count + 1;
             }
-            $buyer   = user::where('id', auth()->user()->id)->select('accessible_rooms')->first();
-            $accessible_rooms_buyer      = json_decode($buyer->accessible_rooms, true);
-            $accessible_rooms_buyer[]    = ['roomId' => $roomId];
 
-            $seller = user::where('id', $this->product_seller)->select('accessible_rooms')->first();
-            $accessible_rooms_seller     = json_decode($seller->accessible_rooms, true);
-            $accessible_rooms_seller[]   = ['roomId' => $roomId];
+            //Update buyer rooms
+            $buyer = user::find(auth()->user()->id);
+            $accessible_rooms_buyer = json_decode($buyer->accessible_rooms, true);
+            if(!$accessible_rooms_buyer) {
+                $accessible_rooms_buyer[]   = ['roomId' => $roomId];
+                $buyer->accessible_rooms    = json_encode($accessible_rooms_buyer);
+            } else {
+                foreach($accessible_rooms_buyer as $accessible_room_buyer) {
+                    if($accessible_room_buyer == $roomId) {
+                        break;
+                    } else {
+                        $accessible_rooms_buyer[]    = ['roomId' => $roomId];
+                        $buyer->accessible_rooms     = json_encode($accessible_rooms_buyer);
+                    }
+                }
+            }
+
+            //Update seller rooms
+            $seller = user::find($this->product_seller);
+            $accessible_rooms_seller = json_decode($seller->accessible_rooms, true);
+            if(!$accessible_rooms_seller) {
+                $accessible_rooms_seller[]  = ['roomId' => $roomId];
+                $seller->accessible_rooms   = json_encode($accessible_rooms_seller);
+            } else {
+                foreach($accessible_rooms_seller as $accessible_room_seller) {
+                    if($accessible_room_seller == $roomId) {
+                        break;
+                    } else {
+                        $accessible_rooms_seller[]   = ['roomId' => $roomId];
+                        $seller->accessible_rooms    = json_encode($accessible_rooms_seller);
+                    }
+                }
+            }
             $send_message = message::create(['roomId' => $roomId, 'product_id' => $this->product_id, 'sender' => auth()->user()->id, 'receiver' => $this->product_seller,'buyer' => auth()->user()->id, 'seller' => $this->product_seller, 'message' => $this->body]);
             if($send_message) {
-                $buyer->update(['accessible_rooms' => json_encode($accessible_rooms_buyer)]);
-                $seller->update(['accessible_rooms' => json_encode($accessible_rooms_seller)]);
+                $buyer->save();
+                $seller->save();
                 session()->flash('message', 'Message successfully sended!');
             } else {
                 session()->flash('message', 'Something went wrong! try again later.');
