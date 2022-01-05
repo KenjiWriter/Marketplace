@@ -2,35 +2,31 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\mainController;
+use App\Http\Controllers\authController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
     Route::get('/', [mainController::class, 'index'])->name('index');
     Route::get('/user/profile/{id}', [mainController::class, 'profile'])->name('profile');
     Route::get('/announcement/{product_id}', [mainController::class, 'product_page'])->name('product_page');
 
     //Facebook login
-    Route::get('/auth/facebook', [mainController::class, 'redirectToFacebook'])->name('auth.facebook');
-    Route::get('/auth/facebook/callback', [mainController::class, 'handleFacebookCallback'])->name('auth.facebook.callback');
+    Route::get('/auth/facebook', [authController::class, 'redirectToFacebook'])->name('auth.facebook');
+    Route::get('/auth/facebook/callback', [authController::class, 'handleFacebookCallback'])->name('auth.facebook.callback');
     
     //Google login
-    Route::get('/auth/google', [mainController::class, 'redirectToGoogle'])->name('auth.google');
-    Route::get('/auth/google/callback', [mainController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+    Route::get('/auth/google', [authController::class, 'redirectToGoogle'])->name('auth.google');
+    Route::get('/auth/google/callback', [authController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 
     Route::group(['middleware'=>['authCheck']], function(){ //To access these pages, the user must be logged in
         //Auth
-        Route::get('/auth', [mainController::class, 'auth'])->name('auth');
+        Route::get('/auth', [authController::class, 'auth'])->name('auth');
 
         //Logout
-        Route::post('/auth/logout', [mainController::class, 'logout'])->name('auth.logout');
+        Route::post('/auth/logout', [authController::class, 'logout'])->name('auth.logout');
+
+        //Email verification
+        Route::get('/email/verify', [authController::class, 'show'])->name('verification.notice');
+        Route::get('/email/verify/{id}/{hash}', [authController::class, 'verify'])->name('verification.verify')->middleware(['signed']);
+        Route::post('/email/resend', [authController::class, 'email_resend'])->name('verification.resend');
 
         //User
         Route::get('/post/add', [mainController::class, 'add'])->name('post.add');
