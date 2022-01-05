@@ -24,6 +24,9 @@ class mainController extends Controller
     //Facebook login
     public function redirectToFacebook()
     {
+        if(auth()->user()) {
+            return redirect()->route('index');
+        }
         return Socialite::driver('facebook')->redirect();
     }
 
@@ -38,6 +41,9 @@ class mainController extends Controller
     //Google login
     public function redirectToGoogle()
     {
+        if(auth()->user()) {
+            return redirect()->route('index');
+        }
         return Socialite::driver('google')->redirect();
     }
 

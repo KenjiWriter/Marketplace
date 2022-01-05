@@ -17,13 +17,13 @@ use App\Http\Controllers\mainController;
     Route::get('/user/profile/{id}', [mainController::class, 'profile'])->name('profile');
     Route::get('/announcement/{product_id}', [mainController::class, 'product_page'])->name('product_page');
 
-        //Facebook login
-        Route::get('/auth/facebook', [mainController::class, 'redirectToFacebook'])->name('auth.facebook');
-        Route::get('/auth/facebook/callback', [mainController::class, 'handleFacebookCallback'])->name('auth.facebook.callback');
+    //Facebook login
+    Route::get('/auth/facebook', [mainController::class, 'redirectToFacebook'])->name('auth.facebook');
+    Route::get('/auth/facebook/callback', [mainController::class, 'handleFacebookCallback'])->name('auth.facebook.callback');
     
-        //Google login
-        Route::get('/auth/google', [mainController::class, 'redirectToGoogle'])->name('auth.google');
-        Route::get('/auth/google/callback', [mainController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+    //Google login
+    Route::get('/auth/google', [mainController::class, 'redirectToGoogle'])->name('auth.google');
+    Route::get('/auth/google/callback', [mainController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 
     Route::group(['middleware'=>['authCheck']], function(){ //To access these pages, the user must be logged in
         //Auth
