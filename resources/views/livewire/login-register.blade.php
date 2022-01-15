@@ -1,4 +1,20 @@
 <div>
+    <script>
+        function onSubmit(token) 
+        {
+          document.getElementById("demo-form").submit();
+        }
+
+        function onClick(e) 
+        {
+            e.preventDefault();
+            grecaptcha.ready(function() {
+            grecaptcha.execute('6LcJoQQeAAAAAPoH-SAX7Kl9x4NV0xC5GvW1sZrK', {action: 'submit'}).then(function(token) {
+                dd('test');
+            });
+            });
+        }
+    </script>
     <div class="row">
         <div class="col-md-12">
             @if (session()->has('message'))
@@ -40,7 +56,11 @@
                         </div>
                     </div>
                     <div class="col-md-12 text-center">
-                        <button class="btn text-white btn-success" wire:click.prevent="registerStore">Register</button>
+                        <script src="https://www.google.com/recaptcha/api.js?render=6LcJoQQeAAAAAPoH-SAX7Kl9x4NV0xC5GvW1sZrK"></script>
+                        <button class="g-recaptcha" 
+                        data-sitekey="6LcJoQQeAAAAAPoH-SAX7Kl9x4NV0xC5GvW1sZrK" 
+                        data-callback='onSubmit' 
+                        data-action='submit'>Register</button>
                     </div>
                     <div class="col-md-12 text-center">
                         Or Login via <br>

@@ -6,24 +6,66 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CherryDev</title>
     @livewireStyles
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href="{{ asset('css/shop-homepage.css') }}" rel="stylesheet">
 </head>
 <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ route('index') }}">Wenzzi Marketplace</a>
+            </div>
+    
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    @if (!Auth::guest())
+                        <li><a href="{{ route('post.add') }}">Create new announcement</a>
+                        </li>
+                        <li><a href="{{route('profile', auth()->user()->id) }}">Profile</a>
+                        </li>
+                        <li><a href="{{route('messages')}}">Messages</a>
+                        </li>
+                        <li> </li>
+                        <li><a href="{{ route('balance') }}">Balance: {{ auth()->user()->balance }}$ [Add balance]</a></li>
+                    @endif
+                        <li><a href="{{ route('auth') }}">Login/Register</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
     @yield('content')
-    <nav>
-        <a href="{{ route('index') }}">Main page</a> |
-        @if (!Auth::guest())
-        <a href="{{ route('post.add') }}">Create new announcement</a> |
-        <a href="{{route('profile', auth()->user()->id) }}">Profile</a> |
-        <a href="{{route('messages')}}">Messages</a> |
-        <label for="balance">Balance: </label> <span>{{ auth()->user()->balance }}$</span> <a href="{{ route('balance') }}">Add balance</a>
-        <form method="POST" action="{{ route('auth.logout') }}">
-            @csrf
-            <input type="submit" value="Logout">
-        </form>
-            @else
-            <a href="{{route('auth') }}">Login/Register</a>
-        @endif
-        </nav>
+    <div class="container">
+
+        <hr>
+    
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; 2022 <a href="https://github.com/KenjiWriter">Wenzzi</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+    
+    </div>
+    <!-- /.container -->
+    
+    <!-- JavaScript -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.js"></script>
     @livewireScripts
 </body>
 </html>

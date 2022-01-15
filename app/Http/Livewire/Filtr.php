@@ -48,7 +48,7 @@ class Filtr extends Component
         ->when($this->sort == 4, function($query) {
             $query->orderBy('created_at', 'desc');
         })
-        ->simplePaginate(10);
+        ->paginate(12);
         return view('livewire.filtr', [
             'products' => $products
         ]);
