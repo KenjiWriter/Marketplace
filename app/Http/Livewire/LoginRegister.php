@@ -10,10 +10,18 @@ class LoginRegister extends Component
 {
     public $users, $email, $password, $password_confirmation, $name, $remember;
     public $registerForm = false;
+    public $num1, $num2, $result, $user_result;
 
     public function render()
     {
         return view('livewire.login-register');
+    }
+
+    private function secureQuestion()
+    {
+        $this->num1 = rand(1,10);
+        $this->num2 = rand(1,10);
+        $this->result = $this->num1 + $this->num2;
     }
 
     private function resetInputFields(){
@@ -43,6 +51,7 @@ class LoginRegister extends Component
 
     public function register()
     {
+        $this->secureQuestion();
         $this->registerForm = !$this->registerForm;
     }
 
@@ -52,15 +61,22 @@ class LoginRegister extends Component
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:6',
+            'user_result' => 'required|numeric',
         ]);
 
-        $this->password = Hash::make($this->password); 
+        if($this->user_result == $this->result) {
+            $this->password = Hash::make($this->password); 
 
-        User::create(['name' => $this->name, 'email' => $this->email,'password' => $this->password]);
-
-        session()->flash('message', 'Your register successfully Go to the login page.');
-
-        $this->resetInputFields();
+            User::create(['name' => $this->name, 'email' => $this->email,'password' => $this->password]);
+    
+            session()->flash('message', 'Your register successfully Go to the login page.');
+    
+            $this->resetInputFields();
+            $this->secureQuestion();
+        } else {
+            session()->flash('error', 'Result of secure question are wrong, try again.');
+            $this->secureQuestion();
+        }
 
     }
 }

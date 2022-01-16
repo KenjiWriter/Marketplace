@@ -3,6 +3,16 @@
     <div class="container text-center border border-dark">
         <div class="col-lg-4 col-lg-offset-4 form-row">
             <h3>Register</h3>
+            @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+            @endif
+            @if (session()->has('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
             <form>
                 <div class="form-group">
                     <label for="Email">Your name</label>
@@ -23,6 +33,11 @@
                     <label for="Password_c">Confirm password</label>
                     <input type="password" class="form-control" id="Password_c" wire:model="password_confirmation" name="password_confirmation" placeholder="Password">
                     @error('password_confirmation') <span class="text-danger error">{{ $message }}</span>@enderror
+                </div>
+                <div class="form-group form-inline">
+                    <label for="question">Secure question</label> <br>
+                    <label for="question">{{ $num1 }} + {{ $num2 }} = ?</label>
+                    <input type="number" class="form-control" id="question" wire:model="user_result" required placeholder="Enter answer">
                 </div>
                 <div class="form-group">
                     <button class="btn text-white btn-success" wire:click.prevent="registerStore">Register</button>
