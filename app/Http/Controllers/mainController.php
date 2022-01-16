@@ -93,11 +93,14 @@ class mainController extends Controller
     public function balance_add(Request $req)
     {
         $deposit = $req->amount;
+        $validated = $req->validate([
+            'amount' => 'required|numeric|max:255',
+        ]);
         if(!isset($deposit) or empty($deposit)) {
-            return back()->with('message', 'Deposit amount cannot be empty!');
+            return back()->with('error', 'Deposit amount cannot be empty!');
         }
         if($deposit < 5) {
-            return back()->with('message', 'Deposit cannot be lower then 5$!');
+            return back()->with('error', 'Deposit cannot be lower then 5$!');
         }
 
         //Here will be paywall gate
@@ -105,7 +108,7 @@ class mainController extends Controller
         $user = user::find(auth()->user()->id);
         $user->balance += $deposit;
         $user->save();
-        return back()->with('success', 'deposit successful added to account!');
+        return back()->with('message', 'deposit successful added to account!');
 
     }
 
