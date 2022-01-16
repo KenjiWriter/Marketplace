@@ -32,6 +32,7 @@
                 <div class="form-group">
                     <label for="Password_c">Confirm password</label>
                     <input type="password" class="form-control" id="Password_c" wire:model="password_confirmation" name="password_confirmation" placeholder="Password">
+                    <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                     @error('password_confirmation') <span class="text-danger error">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group form-inline">

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Hash;
 use App\Models\User;
+use Auth;
 
 class LoginRegister extends Component
 {
@@ -67,12 +68,19 @@ class LoginRegister extends Component
         if($this->user_result == $this->result) {
             $this->password = Hash::make($this->password); 
 
-            User::create(['name' => $this->name, 'email' => $this->email,'password' => $this->password]);
+            $user = new User();
+            $user->name = $this->name;
+            $user->email = $this->email;
+            $user->password =  $this->password;
+            $user->save();
     
             session()->flash('message', 'Your register successfully Go to the login page.');
-    
+
             $this->resetInputFields();
             $this->secureQuestion();
+
+            Auth::login($user); 
+            return redirect()->route('index');
         } else {
             session()->flash('error', 'Result of secure question are wrong, try again.');
             $this->secureQuestion();
