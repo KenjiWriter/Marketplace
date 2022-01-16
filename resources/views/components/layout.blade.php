@@ -38,6 +38,12 @@
                         </li>
                         <li> </li>
                         <li><a href="{{ route('balance') }}">Balance: {{ auth()->user()->balance }}$ [Add balance]</a></li>
+                        <li>
+                            <form action="{{ route('auth.logout') }}" method="POST">
+                                @csrf
+                                <button class="btn btn-danger text-white" type="submit">Logout</button>
+                            </form>
+                        </li>
                         @else
                         <li><a href="{{ route('auth') }}">Login/Register</a></li>
                     @endif
