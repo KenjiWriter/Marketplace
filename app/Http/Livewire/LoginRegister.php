@@ -8,7 +8,7 @@ use App\Models\User;
 
 class LoginRegister extends Component
 {
-    public $users, $email, $password, $name, $remember;
+    public $users, $email, $password, $password_confirmation, $name, $remember;
     public $registerForm = false;
 
     public function render()
@@ -37,7 +37,7 @@ class LoginRegister extends Component
                 session()->flash('message', "You are Login successful.");
                 return redirect('/');
         }else{
-            session()->flash('error', 'email and password are wrong.');
+            session()->flash('error', 'email or password are wrong.');
         }
     }
 
@@ -50,8 +50,8 @@ class LoginRegister extends Component
     {
         $validatedDate = $this->validate([
             'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed|min:6',
         ]);
 
         $this->password = Hash::make($this->password); 
