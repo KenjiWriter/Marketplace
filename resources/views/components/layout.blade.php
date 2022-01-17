@@ -53,6 +53,16 @@
         </div>
         <!-- /.container -->
     </nav>
+    @if (session()->has('global_error'))
+        <div class="alert alert-danger">
+            {{ session('global_error') }}
+        </div>
+    @endif
+    @if (session()->has('global_message'))
+        <div class="alert alert-success">
+            {{ session('global_message') }}
+        </div>
+    @endif
     @yield('content')
     <div class="container">
 
