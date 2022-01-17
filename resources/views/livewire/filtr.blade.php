@@ -93,14 +93,14 @@
                                 $img = 'noImg.jpg';
                             }
                         ?>
-                        <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="col-sm-2 col-lg-4 col-md-2">
                             <div class="thumbnail" style="height: 100%;">
-                                <img src="{{ asset("storage/images/".$img) }}" style="width: 100%; max-width:300px; height: 100%; max-height: 150px;" alt="{{ $img }}">
+                                <img src="{{ asset("storage/images/".$img) }}" style="width: 100%; max-width:300px; height: 100%; max-height: 500px;" alt="{{ $img }}">
                                 <div class="caption">
                                     <h4 class="pull-right">${{ $product->price }}</h4>
                                     <h4><a href="{{ route('product_page', $product->id) }}">{{ $product->name }}</a>
                                     </h4>
-                                    <p>Description</p>
+                                    <p>{{ Str::limit($product->description, 75) }}</p>
                                 </div>
                                 <div>
                                     <p class="pull-right">
