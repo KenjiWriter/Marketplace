@@ -40,10 +40,12 @@
             <div class="form-group">
                 <label for="name">Title:</label>
                 <input class="form-control" type="text" wire:model="name" id="name" placeholder="Title">
+                @error('name') <span style="color: red;">{{ $message }}</span> @enderror
             </div>
             <div class="form-group">
                 <label for="desc">Description: </label>
-                <textarea class="form-control" name="" id="desc" cols="30" rows="5"></textarea>
+                <textarea class="form-control" name="" id="desc" cols="30" rows="5" wire:model="description"></textarea>
+                @error('description') <span style="color: red;">{{ $message }}</span> @enderror
             </div>
             <div class="form-group">
                 <label for="Owner">I'm a first owner: </label> <input id="Owner" class="checkbox" type="checkbox" wire:model="first_owner">
@@ -57,6 +59,7 @@
                     <option value="3">Computers</option>
                     <option value="4">Other</option>
                 </select>
+                @error('category') <span style="color: red;">{{ $message }}</span> @enderror
             </div>
             <div class="form-group">
                 <label for="price">Price: </label>
