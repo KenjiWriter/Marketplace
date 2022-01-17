@@ -63,6 +63,7 @@ class product extends Model
         'Owner',
         'user_id',
         'name',
+        'description',
         'Active',
         'price',
         'images',

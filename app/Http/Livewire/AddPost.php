@@ -10,13 +10,14 @@ use Auth;
 class AddPost extends Component
 {
     use WithFileUploads;
-    public $name = null, $first_owner = null, $category = null, $price = null, $photos = [];
+    public $name = null, $description = null, $first_owner = null, $category = null, $price = null, $photos = [];
     public function add()
     {
         $validatedDate = $this->validate([
-            'name' => 'required',
+            'name' => 'required|min:3',
             'category' => 'required',
             'price' => 'required',
+            'description' => 'max:500',
         ]);
         if(isset($this->first_owner)) {
             $first_owner = 1;
@@ -34,10 +35,10 @@ class AddPost extends Component
         } else {
             $images = NULL;
         }
-        $productData = array('Active' => 1, 'name' => $this->name,'user_id' => auth()->user()->id, 'First_owner' => $first_owner,
+        $productData = array('Active' => 1, 'name' => $this->name, 'description' => $this->description, 'user_id' => auth()->user()->id, 'First_owner' => $first_owner,
                              'Owner' => auth()->user()->name, 'price' => $this->price, 'category' => $this->category, 'images' => $images);
         product::create($productData);
-        session()->flash('message', "Successfuly added new announcement.");
+        return redirect()->route('index')->with('global_message', 'Successfuly added new announcement.');
     }
 
     public function render()

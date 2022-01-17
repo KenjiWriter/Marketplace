@@ -44,7 +44,7 @@
             </div>
             <div class="form-group">
                 <label for="desc">Description: </label>
-                <textarea class="form-control" name="" id="desc" cols="30" rows="5" wire:model="description"></textarea>
+                <textarea class="form-control" id="desc" cols="30" rows="5" wire:model="description"></textarea>
                 @error('description') <span style="color: red;">{{ $message }}</span> @enderror
             </div>
             <div class="form-group">
