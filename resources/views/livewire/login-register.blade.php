@@ -83,6 +83,9 @@
                         <input type="password" class="form-control" id="Password" wire:model="password" placeholder="Password">
                         @error('password') <span class="text-danger error">{{ $message }}</span>@enderror
                     </div>
+                    <div class="text-right">
+                        <a href="{{ route('auth.reset') }}">Forgot password?</a>
+                    </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" wire:model="remember" id="remember" name="remember" value="1">
                         <label class="form-check-label" for="remember">Remember me</label>

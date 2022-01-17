@@ -15,6 +15,12 @@ use App\Http\Controllers\authController;
     //Google login
     Route::get('/auth/google', [authController::class, 'redirectToGoogle'])->name('auth.google');
     Route::get('/auth/google/callback', [authController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+    
+    //Password reset
+    Route::get('/auth/reset', [authController::class, 'passwordReset'])->name('auth.reset');
+    Route::post('/auth/reset/send', [authController::class, 'passwordReset_send'])->name('auth.reset.send');
+    Route::get('/auth/reset/{email}/{code}', [authController::class, 'passwordReset_verify'])->name('auth.reset.verify');
+    Route::post('/auth/reset/{email}/{code}', [authController::class, 'passwordReset_change'])->name('auth.reset.change');
 
     Route::group(['middleware'=>['authCheck']], function(){ //To access these pages, the user must be logged in
         //Auth
