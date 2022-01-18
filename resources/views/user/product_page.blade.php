@@ -19,7 +19,8 @@
                     @else
                     <img style="width: 150px; height=100px;" src="{{ asset('storage/images/'.$img) }}" alt="{{ $img }}">
                 @endif <br>
-                <td><label>Product name: {{ $product->name }}</label></td><br>
+                <td><label>Title: {{ $product->name }}</label></td><br>
+                <td><label>Description: {{ $product->description }}</label></td><br>
                 <td><label>Category: {{ $category }}</label></td><br>
                 <td><label>First owner: {{ $owner }}</label></td><br>
                 <td><label>Price: {{ $product->price }}$</label></td><br>

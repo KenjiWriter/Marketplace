@@ -92,6 +92,12 @@
                             } else {
                                 $img = 'noImg.jpg';
                             }
+
+                            if($product->description == NULL) {
+                                $description = "No item description";
+                            } else {
+                                $description = $product->description;
+                            }
                         ?>
                         <div class="col-sm-2 col-lg-4 col-md-2">
                             <div class="thumbnail" style="height: 100%;">
@@ -100,7 +106,7 @@
                                     <h4 class="pull-right">${{ $product->price }}</h4>
                                     <h4><a href="{{ route('product_page', $product->id) }}">{{ $product->name }}</a>
                                     </h4>
-                                    <p>{{ Str::limit($product->description, 75) }}</p>
+                                    <p>{{ Str::limit($description, 75) }}</p>
                                 </div>
                                 <div>
                                     <p class="pull-right">
