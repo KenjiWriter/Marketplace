@@ -72,7 +72,7 @@
                         {{ session('error') }}
                     </div>
                 @endif
-                <form>
+                <form autocomplete="off">
                     <div class="form-group">
                         <label for="Email">Email address</label>
                         <input type="email" class="form-control" id="Email" aria-describedby="emailHelp" wire:model="email" placeholder="Enter email">
@@ -100,13 +100,13 @@
                     <div class="form-group">
                         &mdash; Or login via &mdash;
                     </div>
-                    <div class="form-group">
-                        <a class="btn btn-primary" href="{{ route('auth.facebook') }}"> Facebook</a>
-                    </div>
-                    <div class="form-group">
-                        <button  class="btn btn-danger">Google</button>
-                    </div>
                 </form>
+                <div class="form-group">
+                    <a class="btn btn-primary" href="{{ route('auth.facebook') }}"> Facebook</a>
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-danger" href="{{ route('auth.google') }}">Google</a>
+                </div>
             </div>
         </div>
     @endif
