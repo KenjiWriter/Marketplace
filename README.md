@@ -13,10 +13,10 @@ The marketplace project create by scratch using laravel and livewire.
 - setting active/unactive product status
 - adding balance to account
 - chating with sellers
-- prvite profiles
+- private profile function
 - offline/online profile status
 - forgot password function
-- rememver me function
+- remember me function
 - created from scratch security question in register
 - login via Facebook and google
 
