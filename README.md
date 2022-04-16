@@ -1,6 +1,6 @@
 # Marketplace app by Wenzzi
 
-The marketplace project create by screach using laravel and livewire.
+The marketplace project create by scratch using laravel and livewire.
 
 ## Features
 
@@ -17,7 +17,7 @@ The marketplace project create by screach using laravel and livewire.
 - offline/online profile status
 - forgot password function
 - rememver me function
-- created from scrach security question in register
+- created from scratch security question in register
 - login via Facebook and google
 
 ## Project status
