@@ -4,7 +4,7 @@
             @if (isset($product))
                 <?php
                 $category = $product->categoryName($product->id);
-                $owner = $product['First_owner'] == 1 ? 'Yes' : 'No';
+                $owner = $product->First_owner == 1 ? 'Yes' : 'No';
                 $images = $product->outPutImages($product->id);
                 $img = $images ?? ['noImg.jpg'];
                 ?>

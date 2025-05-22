@@ -456,3 +456,31 @@ body {
 .bg-success-subtle.text-success {
     color: var(--success) !important;
 }
+
+.sortable-drag {
+    opacity: 0.5;
+    background-color: var(--bs-primary-bg-subtle);
+}
+
+.sortable-ghost {
+    background-color: var(--bs-primary-bg-subtle);
+}
+
+.cursor-move {
+    cursor: move;
+}
+
+.border-dashed {
+    border-style: dashed;
+    border-width: 2px;
+    border-color: var(--bs-border-color);
+}
+
+/* Photo preview hover effect */
+.card-img-top {
+    transition: all 0.2s ease;
+}
+
+.cursor-move:hover .card-img-top {
+    transform: scale(1.03);
+}

@@ -11,17 +11,25 @@ class product extends Model
 
     protected $dates = ['created_at', 'updated_at', 'promote_to'];
 
-    function CheckPromoting($id) 
+    /**
+     * Get the category that owns the product.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    function CheckPromoting($id)
     {
         $product = product::find($id);
-        if($product->promote_to != NULL) {
+        if ($product->promote_to != NULL) {
             $promote_to = $product->promote_to;
             $promoting = now()->lt($promote_to);
         } else {
             $promoting = false;
             $promote_to = NULL;
         }
-        if($promoting == false) {
+        if ($promoting == false) {
             $product->promote = 0;
             $product->promote_to = $promote_to;
             $product->save();
@@ -34,22 +42,28 @@ class product extends Model
 
     function categoryName($id)
     {
-        $product = product::where('id', $id)->select('category')->first();
-        switch ($product->category) {
-            case 1:
-                $category = "Smartphones";
-                break;
-            case 2:
-                $category = "Tablets";
-                break;
-            case 3:
-                $category = "Computers";
-                break;
-            default:
-                $category = "Other";
-                break;
+        $product = product::where('id', $id)->first();
+
+        // First try to get the category through the relationship
+        if (isset($product->category_id)) {
+            $categoryModel = \App\Models\Category::find($product->category_id);
+            if ($categoryModel) {
+                return $categoryModel->name;
+            }
         }
-        return $category;
+
+        // Fallback to the old method if relationship doesn't work
+        $categoryId = isset($product->category) ? $product->category : 4;
+        switch ($categoryId) {
+            case 1:
+                return "Smartphones";
+            case 2:
+                return "Tablets";
+            case 3:
+                return "Computers";
+            default:
+                return "Other";
+        }
     }
 
     function outPutImages($id)
@@ -68,6 +82,7 @@ class product extends Model
         'price',
         'images',
         'category',
+        'category_id',
         'First_owner',
         'promote',
         'promote_to',

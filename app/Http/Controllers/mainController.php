@@ -32,9 +32,14 @@ class mainController extends Controller
         return view('user.profile', compact('id'));
     }
 
-    public function product_page(request $req) 
+    public function product_page(request $req)
     {
-        $product = product::where('id',$req->product_id)->first();
+        $product = product::where('id', $req->product_id)->first();
+
+        if (!$product) {
+            // Product not found, redirect with error message
+            return redirect()->route('index')->with('error', 'Product not found');
+        }
         return view('user.product_page', compact('product'));
     }
 
@@ -50,14 +55,14 @@ class mainController extends Controller
 
     public function post_delete(Request $req)
     {
-        product::where('id',$req->id)->delete();
+        product::where('id', $req->id)->delete();
         return back();
     }
 
     public function post_edit_get(Request $req)
     {
         $product = product::where('id', $req->id)->first();
-        if(auth()->user()->id != $product->user_id) {
+        if (auth()->user()->id != $product->user_id) {
             return view('/');
         }
         return view('user.edit_post', compact('product'));
@@ -66,22 +71,22 @@ class mainController extends Controller
     public function post_edit_post(Request $req)
     {
         $product = product::where('id', $req->id)->first();
-        if(auth()->user()->id != $product->user_id) {
+        if (auth()->user()->id != $product->user_id) {
             return view('/');
         }
         $product->name = $req->title;
-        if(isset($req->first_owner)) {
+        if (isset($req->first_owner)) {
             $product->First_owner = 1;
         } else {
             $product->First_owner = 0;
         }
-        if($req->category == 0) {
+        if ($req->category == 0) {
             $product->category = 4;
         } else {
             $product->category = $req->category;
         }
         $product->price = $req->price;
-        if(isset($req->active)) {
+        if (isset($req->active)) {
             $product->Active = 0;
         } else {
             $product->Active = 1;
@@ -96,10 +101,10 @@ class mainController extends Controller
         $validated = $req->validate([
             'amount' => 'required|numeric|max:255',
         ]);
-        if(!isset($deposit) or empty($deposit)) {
+        if (!isset($deposit) or empty($deposit)) {
             return back()->with('error', 'Deposit amount cannot be empty!');
         }
-        if($deposit < 5) {
+        if ($deposit < 5) {
             return back()->with('error', 'Deposit cannot be lower then 5$!');
         }
 
@@ -109,14 +114,13 @@ class mainController extends Controller
         $user->balance += $deposit;
         $user->save();
         return back()->with('message', 'deposit successful added to account!');
-
     }
 
     public function promote(Request $req)
     {
         $product = product::where('id', $req->id)->first();
-        if(auth()->user()->id == $product->user_id) {
-            if(now()->lt($product->promote_to) == true) {
+        if (auth()->user()->id == $product->user_id) {
+            if (now()->lt($product->promote_to) == true) {
                 $promoting_to = $product->promote_to;
             } else {
                 $promoting_to = '';
@@ -131,11 +135,11 @@ class mainController extends Controller
     {
         $product = product::find($req->id);
         $user = auth()->user();
-        $user = user::where('id',$user->id)->first();
-        if($user->id == $product->user_id) {
+        $user = user::where('id', $user->id)->first();
+        if ($user->id == $product->user_id) {
             switch ($req->days) {
                 case 3:
-                    if($user->balance >= 5) {
+                    if ($user->balance >= 5) {
                         $days = 3;
                         $balance = 5;
                     } else {
@@ -143,7 +147,7 @@ class mainController extends Controller
                     }
                     break;
                 case 14:
-                    if($user->balance >= 15) {
+                    if ($user->balance >= 15) {
                         $days = 14;
                         $balance = 15;
                     } else {
@@ -151,7 +155,7 @@ class mainController extends Controller
                     }
                     break;
                 case 30:
-                    if($user->balance >= 30) {
+                    if ($user->balance >= 30) {
                         $days = 30;
                         $balance = 30;
                     } else {
@@ -162,7 +166,7 @@ class mainController extends Controller
                     return back()->with('message', 'Invalid days');
                     break;
             }
-            if(now()->lt($product->promote_to) == true and $product->promote_to != NULL) {
+            if (now()->lt($product->promote_to) == true and $product->promote_to != NULL) {
                 $product->promote_to = $product->promote_to->addDays($days);
             } else {
                 $product->promote_to = now()->addDays($days);
@@ -179,10 +183,10 @@ class mainController extends Controller
     public function messages()
     {
         $buying = message::where('buyer', auth()->user()->id)->orderBy('created_at', 'desc')->get();
-        foreach($buying as $message) {
-            if(isset($collectionBuying)) {
-                foreach($collectionBuying as $i) {
-                    if($message->roomId == $i["roomId"]) {
+        foreach ($buying as $message) {
+            if (isset($collectionBuying)) {
+                foreach ($collectionBuying as $i) {
+                    if ($message->roomId == $i["roomId"]) {
                         continue;
                     } else {
                         $collectionBuying[] = ['seller' => $message->seller, 'roomId' => $message->roomId, 'product' => $message->product_id, 'time' => $message->created_at];
@@ -194,10 +198,10 @@ class mainController extends Controller
         }
 
         $selling = message::where('seller', auth()->user()->id)->orderBy('created_at', 'desc')->get();
-        foreach($selling as $message) {
-            if(isset($collectionSelling)) { 
-                foreach($collectionSelling as $i) {
-                    if($message->roomId == $i["roomId"]) {
+        foreach ($selling as $message) {
+            if (isset($collectionSelling)) {
+                foreach ($collectionSelling as $i) {
+                    if ($message->roomId == $i["roomId"]) {
                         continue;
                     } else {
                         $collectionSelling[] = ['buyer' => $message->buyer, 'roomId' => $message->roomId, 'product' => $message->product_id, 'time' => $message->created_at];
@@ -208,10 +212,10 @@ class mainController extends Controller
             }
         }
 
-        if(empty($collectionBuying)) {
+        if (empty($collectionBuying)) {
             $collectionBuying = [];
         }
-        if(empty($collectionSelling)) {
+        if (empty($collectionSelling)) {
             $collectionSelling = [];
         }
 
