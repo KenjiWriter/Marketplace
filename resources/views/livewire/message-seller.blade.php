@@ -1,16 +1,38 @@
 @if (!Auth::guest())
     <div>
-        <h2>Message seller</h2>
-        <textarea wire:model="body" cols="30" rows="4"></textarea>
-        @error('body')<br> <small style="color: red;">{{ $message }}</small>@enderror
-        @if (session()->has('message'))
-            <div>
-                {{ session('message') }}
+        <form wire:submit.prevent="sendMessage">
+            <div class="mb-3">
+                <label for="messageBody" class="form-label fw-medium">Your Message</label>
+                <textarea id="messageBody" wire:model="body" class="form-control" rows="4"
+                    placeholder="Introduce yourself and ask questions about the product..."></textarea>
+                @error('body')
+                    <div class="text-danger small mt-1">
+                        <i class="ti ti-alert-circle me-1"></i>{{ $message }}
+                    </div>
+                @enderror
             </div>
-        @endif
-        <br>
-        <button name="sendMessage" id="sendMessage" wire:click.prevent="sendMessage">Send message</button>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center">
+                    <i class="ti ti-send me-2"></i>Send Message
+                </button>
+            </div>
+
+            @if (session()->has('message'))
+                <div class="alert alert-success alert-dismissible fade show mt-3 mb-0" role="alert">
+                    <i class="ti ti-check me-2"></i>{{ session('message') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+        </form>
     </div>
-    @else
-    <h2><a href="{{ route('auth') }}">Login in</a> to be able to message to seller</h2>
+@else
+    <div class="text-center py-4">
+        <i class="ti ti-lock fs-1 text-muted mb-3 d-block"></i>
+        <h4 class="fw-semibold">Login Required</h4>
+        <p class="text-muted mb-4">You need to be logged in to contact the seller</p>
+        <a href="{{ route('auth') }}" class="btn btn-primary d-inline-flex align-items-center">
+            <i class="ti ti-login me-2"></i>Login / Register
+        </a>
+    </div>
 @endif

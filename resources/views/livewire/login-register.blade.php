@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6 col-xl-5">
             <div class="card shadow-sm border-0">
-                <div class="card-header bg-white py-3 border-bottom">
+                <div class="card-header bg-gray py-3 border-bottom">
                     <ul class="nav nav-pills nav-fill" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link {{ !$registerForm ? 'active' : '' }} fw-medium py-2 px-4"
@@ -43,7 +43,7 @@
                             <div class="mb-3">
                                 <label for="name" class="form-label">Your Name</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-white"><i class="ti ti-user text-muted"></i></span>
+                                    <span class="input-group-text bg-gray"><i class="ti ti-user text-muted"></i></span>
                                     <input type="text" class="form-control" id="name" wire:model="name"
                                         placeholder="Enter your name">
                                 </div>
@@ -56,7 +56,7 @@
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email Address</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-white"><i class="ti ti-mail text-muted"></i></span>
+                                    <span class="input-group-text bg-gray"><i class="ti ti-mail text-muted"></i></span>
                                     <input type="email" class="form-control" id="email" wire:model="email"
                                         placeholder="Enter your email">
                                 </div>
@@ -69,7 +69,7 @@
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-white"><i class="ti ti-lock text-muted"></i></span>
+                                    <span class="input-group-text bg-gray"><i class="ti ti-lock text-muted"></i></span>
                                     <input type="password" class="form-control" id="password" wire:model="password"
                                         placeholder="Create a password">
                                 </div>
@@ -82,7 +82,7 @@
                             <div class="mb-3">
                                 <label for="password_confirmation" class="form-label">Confirm Password</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-white"><i
+                                    <span class="input-group-text bg-gray"><i
                                             class="ti ti-lock-check text-muted"></i></span>
                                     <input type="password" class="form-control" id="password_confirmation"
                                         wire:model="password_confirmation" placeholder="Confirm your password">
@@ -128,7 +128,7 @@
                             <div class="position-relative my-4">
                                 <hr>
                                 <span
-                                    class="position-absolute top-50 start-50 translate-middle px-3 bg-white text-muted small">Or
+                                    class="position-absolute top-50 start-50 translate-middle px-3 bg-gray text-muted small">Or
                                     sign up with</span>
                             </div>
 
@@ -150,7 +150,7 @@
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email Address</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-white"><i
+                                    <span class="input-group-text bg-gray"><i
                                             class="ti ti-mail text-muted"></i></span>
                                     <input type="email" class="form-control" id="email" wire:model="email"
                                         placeholder="Enter your email">
@@ -168,7 +168,7 @@
                                         password?</a>
                                 </div>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-white"><i
+                                    <span class="input-group-text bg-gray"><i
                                             class="ti ti-lock text-muted"></i></span>
                                     <input type="password" class="form-control" id="password" wire:model="password"
                                         placeholder="Enter your password">
@@ -201,7 +201,7 @@
                             <div class="position-relative my-4">
                                 <hr>
                                 <span
-                                    class="position-absolute top-50 start-50 translate-middle px-3 bg-white text-muted small">Or
+                                    class="position-absolute top-50 start-50 translate-middle px-3 bg-gray text-muted small">Or
                                     sign in with</span>
                             </div>
 

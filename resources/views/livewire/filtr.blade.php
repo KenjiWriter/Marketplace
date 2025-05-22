@@ -13,7 +13,7 @@
                     <div class="mb-4">
                         <label class="form-label fw-medium">Search</label>
                         <div class="input-group">
-                            <span class="input-group-text bg-white border-end-0">
+                            <span class="input-group-text bg-gray border-end-0">
                                 <i class="ti ti-search text-muted"></i>
                             </span>
                             <input type="text" class="form-control border-start-0" wire:model="search"
@@ -29,14 +29,14 @@
                         <div class="row g-2">
                             <div class="col-6">
                                 <div class="input-group">
-                                    <span class="input-group-text bg-white">$</span>
+                                    <span class="input-group-text bg-gray">$</span>
                                     <input type="number" min="0" class="form-control" wire:model="price_min"
                                         placeholder="Min">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="input-group">
-                                    <span class="input-group-text bg-white">$</span>
+                                    <span class="input-group-text bg-gray">$</span>
                                     <input type="number" min="0" class="form-control" wire:model="price_max"
                                         placeholder="Max">
                                 </div>

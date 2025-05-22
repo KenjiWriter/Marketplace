@@ -321,3 +321,138 @@ body {
         box-shadow: none !important;
     }
 }
+
+/* Chat styling */
+.chat-messages {
+    background-color: #f8f9fa;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
+    background-size: 20px 20px;
+    scroll-behavior: smooth;
+}
+
+.message-bubble {
+    animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+.message-content {
+    box-shadow: var(--shadow-sm);
+    border-radius: 1rem;
+    word-wrap: break-word;
+}
+
+.own-message .message-content {
+    border-bottom-right-radius: 0.25rem;
+}
+
+.other-message .message-content {
+    border-bottom-left-radius: 0.25rem;
+}
+
+.avatar-initial {
+    transition: var(--transition-base);
+}
+
+.list-group-item {
+    transition: var(--transition-base);
+}
+
+.list-group-item:hover {
+    background-color: var(--primary-subtle);
+    transform: translateY(-2px);
+}
+
+/* Custom scrollbar for chat */
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Message composer area */
+.card-footer .form-control {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.card-footer .btn {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+@media (max-width: 768px) {
+    .chat-messages {
+        height: 300px !important;
+    }
+}
+
+.avatar-initial {
+    transition: var(--transition-base);
+}
+
+.avatar-initial:hover {
+    transform: scale(1.05);
+}
+
+.list-group-item {
+    transition: var(--transition-base);
+}
+
+.list-group-item:hover {
+    background-color: var(--primary-subtle);
+}
+
+/* Private/Public profile toggle styling */
+.form-switch .form-check-input {
+    height: 1.25rem;
+    width: 2.5rem;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* Badge styling refinements */
+.badge {
+    font-weight: 500;
+}
+
+.bg-primary-subtle {
+    background-color: var(--primary-subtle);
+}
+
+.bg-danger-subtle {
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.bg-danger-subtle.text-danger {
+    color: var(--danger) !important;
+}
+
+.bg-warning-subtle {
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
+.bg-warning-subtle.text-warning {
+    color: var(--warning) !important;
+}
+
+.bg-success-subtle {
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+.bg-success-subtle.text-success {
+    color: var(--success) !important;
+}
