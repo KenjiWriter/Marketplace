@@ -1,0 +1,323 @@
+:root {
+    /* Color system with semantic naming */
+    --primary: #4f46e5;
+    --primary-dark: #4338ca;
+    --primary-light: #a5b4fc;
+    --primary-subtle: #eef2ff;
+
+    --secondary: #64748b;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --info: #3b82f6;
+
+    --dark: #0f172a;
+    --dark-soft: #1e293b;
+    --light: #f8fafc;
+    --light-soft: #f1f5f9;
+
+    --body-bg: var(--light);
+    --body-color: var(--dark);
+
+    --border-color: #e2e8f0;
+    --card-bg: #ffffff;
+    --input-bg: #ffffff;
+
+    /* Spacing system */
+    --space-unit: 0.25rem;
+    --space-xs: calc(2 * var(--space-unit));
+    --space-sm: calc(3 * var(--space-unit));
+    --space-md: calc(5 * var(--space-unit));
+    --space-lg: calc(8 * var(--space-unit));
+    --space-xl: calc(12 * var(--space-unit));
+
+    /* Typography */
+    --font-family-base: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --line-height-base: 1.6;
+    --border-radius: 0.5rem;
+    --transition-base: all 0.2s ease-in-out;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark mode variables */
+[data-bs-theme="dark"] {
+    --primary-subtle: #1e1b4b;
+
+    --body-bg: var(--dark);
+    --body-color: #e2e8f0;
+
+    --border-color: #2d3748;
+    --card-bg: var(--dark-soft);
+    --input-bg: var(--dark-soft);
+}
+
+/* Global styles */
+body {
+    font-family: var(--font-family-base);
+    line-height: var(--line-height-base);
+    background-color: var(--body-bg);
+    color: var(--body-color);
+    transition: var(--transition-base);
+}
+
+.bg-body {
+    background-color: var(--body-bg) !important;
+}
+
+.text-body {
+    color: var(--body-color) !important;
+}
+
+/* Navbar styling */
+.navbar {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    background-color: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-color: var(--border-color);
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.navbar .nav-link {
+    position: relative;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition-base);
+}
+
+.navbar .nav-link:hover {
+    background-color: var(--primary-subtle);
+    color: var(--primary);
+}
+
+/* Button styling */
+.btn {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition-base);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+}
+
+/* Card styling */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    transition: var(--transition-base);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.card-header,
+.card-footer {
+    background-color: transparent;
+    border-color: var(--border-color);
+}
+
+/* Form elements */
+.form-control,
+.form-select {
+    background-color: var(--input-bg);
+    border-color: var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 0.6rem 1rem;
+    transition: var(--transition-base);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.25rem rgba(79, 70, 229, 0.15);
+}
+
+/* Product card specific styling */
+.product-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition-base);
+}
+
+.product-card .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card .product-title {
+    font-weight: 600;
+    color: var(--body-color);
+    text-decoration: none;
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-card .product-price {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-card .product-description {
+    color: var(--secondary);
+    font-size: 0.875rem;
+    flex-grow: 1;
+}
+
+.product-card .product-meta {
+    font-size: 0.75rem;
+    color: var(--secondary);
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+    margin-top: auto;
+}
+
+/* Badge styling */
+.badge-promoted {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.35rem 0.65rem;
+    border-radius: 2rem;
+    z-index: 2;
+}
+
+/* Social icons */
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--light) !important;
+    transition: var(--transition-base);
+}
+
+.social-icon:hover {
+    background-color: var(--primary);
+    transform: translateY(-3px);
+}
+
+/* Theme toggle button */
+#theme-toggle {
+    background-color: var(--card-bg);
+    color: var(--body-color);
+    border: 1px solid var(--border-color);
+}
+
+/* Hover utilities */
+.hover-text-white:hover {
+    color: white !important;
+}
+
+/* Back to top button */
+#back-to-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .navbar .nav-link {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Accessibility improvements */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+
+    .navbar,
+    .footer,
+    #back-to-top,
+    #theme-toggle {
+        display: none !important;
+    }
+
+    body {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    .card {
+        break-inside: avoid;
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+    }
+}
