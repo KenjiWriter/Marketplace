@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
-use App\Models\product;
-use App\Models\Category;
 use Carbon\Carbon;
+use App\Models\product;
+use Livewire\Component;
+use App\Models\Category;
+use Illuminate\Support\Facades\Session;
 
 class Filtr extends Component
 {
@@ -120,7 +121,6 @@ class Filtr extends Component
         if ($this->category_id) {
             $selectedCategory = Category::find($this->category_id);
         }
-
         return view('livewire.filtr', [
             'products' => $paginator,
             'selectedCategory' => $selectedCategory
