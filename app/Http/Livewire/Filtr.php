@@ -10,7 +10,7 @@ use Carbon\Carbon;
 class Filtr extends Component
 {
     public $search, $category_id = null, $sort = null, $first_owner = null, $has_photo = null, $price_min = null, $price_max = null;
-    
+
     protected $listeners = ['categoryChanged'];
 
     public function categoryChanged($categoryId)
@@ -21,11 +21,16 @@ class Filtr extends Component
     public function render()
     {
         $search = $this->search;
-        
+
+        $categoryIds = [$this->category_id];
+        if ($this->category_id) {
+            $categoryIds = $this->getAllChildCategoryIds($this->category_id);
+        }
+
         // Base query conditions
-        $baseQuery = product::when($this->category_id, function ($query) {
-                $query->where('category_id', $this->category_id);
-            })
+        $baseQuery = product::when($this->category_id, function ($query) use ($categoryIds) {
+            $query->whereIn('category_id', $categoryIds);
+        })
             ->when($this->first_owner, function ($query) {
                 $query->where('First_owner', 1);
             })
@@ -64,10 +69,10 @@ class Filtr extends Component
         // Get regular products
         $regularQuery = clone $baseQuery;
         $regularProducts = $regularQuery->where(function ($query) {
-                $query->where('promote', 0)
-                    ->orWhereNull('promote_to')
-                    ->orWhere('promote_to', '<=', now());
-            })
+            $query->where('promote', 0)
+                ->orWhereNull('promote_to')
+                ->orWhere('promote_to', '<=', now());
+        })
             ->when($this->sort == 1, function ($query) {
                 $query->orderBy('price', 'asc');
             })
@@ -120,5 +125,21 @@ class Filtr extends Component
             'products' => $paginator,
             'selectedCategory' => $selectedCategory
         ]);
+    }
+
+    private function getAllChildCategoryIds($categoryId)
+    {
+        // Start with the current category ID
+        $categoryIds = [$categoryId];
+
+        // Get immediate children
+        $childCategories = Category::where('parent_id', $categoryId)->get();
+
+        // Recursively get all descendants
+        foreach ($childCategories as $childCategory) {
+            $categoryIds = array_merge($categoryIds, $this->getAllChildCategoryIds($childCategory->id));
+        }
+
+        return $categoryIds;
     }
 }

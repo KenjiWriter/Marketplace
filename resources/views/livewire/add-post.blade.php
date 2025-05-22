@@ -38,37 +38,54 @@
                                 @enderror
                             </div>
 
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="category" class="form-label fw-medium">Category</label>
-                                    <select class="form-select" wire:model="category_id" id="category">
-                                        <option value="">Select a category</option>
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <label for="parent_category" class="form-label fw-medium">Main Category</label>
+                                    <select class="form-select" wire:model="parent_category_id" id="parent_category">
+                                        <option value="">Select main category</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">
                                                 {{ $category->name }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    @error('category_id')
-                                        <div class="text-danger small mt-1">
-                                            <i class="ti ti-alert-circle me-1"></i>{{ $message }}
-                                        </div>
-                                    @enderror
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label for="price" class="form-label fw-medium">Price ($)</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-gray">$</span>
-                                        <input type="number" id="price" class="form-control" wire:model="price"
-                                            placeholder="Enter price" min="0" step="0.01">
+                                @if (count($subcategories) > 0)
+                                    <div class="col-md-4">
+                                        <label for="subcategory" class="form-label fw-medium">Subcategory</label>
+                                        <select class="form-select" wire:model="subcategory_id" id="subcategory">
+                                            <option value="">Select subcategory</option>
+                                            @foreach ($subcategories as $subcategory)
+                                                <option value="{{ $subcategory->id }}">
+                                                    {{ $subcategory->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    @error('price')
-                                        <div class="text-danger small mt-1">
+                                @endif
+
+                                @if (count($subsubcategories) > 0)
+                                    <div class="col-md-4">
+                                        <label for="category" class="form-label fw-medium">Specific Category</label>
+                                        <select class="form-select" wire:model="category_id" id="category">
+                                            <option value="">Select specific category</option>
+                                            @foreach ($subsubcategories as $subsubcategory)
+                                                <option value="{{ $subsubcategory->id }}">
+                                                    {{ $subsubcategory->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
+
+                                @error('category_id')
+                                    <div class="col-12 mt-2">
+                                        <div class="text-danger small">
                                             <i class="ti ti-alert-circle me-1"></i>{{ $message }}
                                         </div>
-                                    @enderror
-                                </div>
+                                    </div>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
