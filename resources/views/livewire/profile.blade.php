@@ -54,7 +54,7 @@
 
                 <!-- Stats Card -->
                 <div class="card shadow-sm mt-3">
-                    <div class="card-header bg-white py-3">
+                    <div class="card-header bg-gray py-3">
                         <h5 class="mb-0 fw-semibold d-flex align-items-center">
                             <i class="ti ti-chart-bar me-2 text-primary"></i>Stats
                         </h5>
@@ -97,7 +97,7 @@
                     </div>
                 @else
                     <div class="card shadow-sm">
-                        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                        <div class="card-header bg-gray py-3 d-flex justify-content-between align-items-center">
                             <h5 class="mb-0 fw-semibold d-flex align-items-center">
                                 <i class="ti ti-shopping-cart me-2 text-primary"></i>Listings
                             </h5>

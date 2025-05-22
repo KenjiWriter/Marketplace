@@ -130,16 +130,38 @@
                         </div>
 
                         <!-- Message Form -->
-                        <div class="card shadow-sm">
-                            <div class="card-header bg-gray py-3">
-                                <h5 class="mb-0 fw-semibold d-flex align-items-center">
-                                    <i class="ti ti-message-circle me-2 text-primary"></i>Contact Seller
-                                </h5>
+                        @if (Auth::check() && Auth::id() != $product->user_id)
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-gray py-3">
+                                    <h5 class="mb-0 fw-semibold d-flex align-items-center">
+                                        <i class="ti ti-message-circle me-2 text-primary"></i>Contact Seller
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    @livewire('message-seller', ['product_id' => $product->id, 'product_seller' => $product->user_id])
+                                </div>
                             </div>
-                            <div class="card-body">
-                                @livewire('message-seller', ['product_id' => $product->id, 'product_seller' => $product->user_id])
+                        @elseif(Auth::check() && Auth::id() == $product->user_id)
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-gray py-3">
+                                    <h5 class="mb-0 fw-semibold d-flex align-items-center">
+                                        <i class="ti ti-edit me-2 text-primary"></i>Listing Management
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex flex-column gap-2">
+                                        <a href="{{ route('post.edit', $product->id) }}"
+                                            class="btn btn-primary d-flex align-items-center justify-content-center">
+                                            <i class="ti ti-edit me-2"></i>Edit Listing
+                                        </a>
+                                        <a href="{{ route('promote', $product->id) }}"
+                                            class="btn btn-success d-flex align-items-center justify-content-center">
+                                            <i class="ti ti-speakerphone me-2"></i>Promote Listing
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             @else
