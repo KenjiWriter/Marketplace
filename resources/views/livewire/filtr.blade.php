@@ -102,8 +102,9 @@
                         $description = $product->description ?? 'No item description';
                         ?>
                         <div class="col">
-                            <div class="card product-card h-100">
-                                @if (now()->lt($product->promote_to ?? now()))
+                            <div
+                                class="card product-card h-100 {{ $product->promote == 1 && now()->lt($product->promote_to) ? 'promoted' : '' }}">
+                                @if ($product->promote == 1 && now()->lt($product->promote_to))
                                     <div class="badge-promoted">
                                         <i class="ti ti-star-filled me-1"></i>Featured
                                     </div>

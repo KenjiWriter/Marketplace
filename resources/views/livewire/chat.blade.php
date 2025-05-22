@@ -102,7 +102,7 @@
                                 </div>
                             @endif
 
-                            <div class="message-content p-3 rounded {{ $message->sender == auth()->user()->id ? 'bg-primary text-white' : 'bg-light' }}"
+                            <div class="message-content p-3 rounded {{ $message->sender == auth()->user()->id ? 'bg-primary text-white' : 'bg-gray' }}"
                                 style="max-width: 75%;">
                                 <div class="message-text">{{ $message->message }}</div>
                                 <div

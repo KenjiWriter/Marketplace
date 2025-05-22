@@ -156,7 +156,7 @@
                                                             </span>
                                                         @endif
 
-                                                        @if (now()->lt($product->promote_to ?? now()))
+                                                        @if ($product->promote == 1 && now()->lt($product->promote_to ?? now()))
                                                             <span class="badge bg-warning-subtle text-warning">
                                                                 <i class="ti ti-star me-1"></i>Promoted
                                                             </span>
