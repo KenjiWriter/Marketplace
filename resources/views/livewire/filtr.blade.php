@@ -2,6 +2,9 @@
     <div class="row g-4">
         <!-- Filter Sidebar -->
         <div class="col-lg-3 mb-4">
+            <!-- Category Filter Component -->
+            @livewire('category-filter')
+
             <div class="card shadow-sm">
                 <div class="card-header bg-gray py-3">
                     <h5 class="mb-0 fw-semibold d-flex align-items-center">
@@ -44,20 +47,6 @@
                         </div>
                     </div>
 
-                    <!-- Category -->
-                    <div class="mb-4">
-                        <label for="category" class="form-label fw-medium d-flex align-items-center">
-                            <i class="ti ti-category me-2 text-primary"></i>Category
-                        </label>
-                        <select class="form-select" id="category" wire:model="category">
-                            <option value="">All Categories</option>
-                            <option value="1">Electronics</option>
-                            <option value="2">Vehicles</option>
-                            <option value="3">Computers</option>
-                            <option value="4">Other</option>
-                        </select>
-                    </div>
-
                     <!-- Checkboxes -->
                     <div class="mb-4">
                         <label class="form-label fw-medium d-flex align-items-center">
@@ -92,6 +81,31 @@
 
         <!-- Product Grid -->
         <div class="col-lg-9">
+            @if ($selectedCategory)
+                <div class="mb-4">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            @if ($selectedCategory->parent && $selectedCategory->parent->parent)
+                                <li class="breadcrumb-item"><a href="#"
+                                        wire:click.prevent="$emitTo('category-filter', 'categorySelected', 1, {{ $selectedCategory->parent->parent->id }})">{{ $selectedCategory->parent->parent->name }}</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#"
+                                        wire:click.prevent="$emitTo('category-filter', 'categorySelected', 2, {{ $selectedCategory->parent->id }})">{{ $selectedCategory->parent->name }}</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{ $selectedCategory->name }}</li>
+                            @elseif($selectedCategory->parent)
+                                <li class="breadcrumb-item"><a href="#"
+                                        wire:click.prevent="$emitTo('category-filter', 'categorySelected', 1, {{ $selectedCategory->parent->id }})">{{ $selectedCategory->parent->name }}</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{ $selectedCategory->name }}</li>
+                            @else
+                                <li class="breadcrumb-item active">{{ $selectedCategory->name }}</li>
+                            @endif
+                        </ol>
+                    </nav>
+                </div>
+            @endif
+
             @if (count($products) > 0)
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
                     @foreach ($products as $product)

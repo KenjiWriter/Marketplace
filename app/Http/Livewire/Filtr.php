@@ -4,25 +4,28 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\product;
+use App\Models\Category;
 use Carbon\Carbon;
 
 class Filtr extends Component
 {
-    public $search, $category = null, $sort = null, $first_owner = null, $has_photo = null, $price_min = null, $price_max = null;
+    public $search, $category_id = null, $sort = null, $first_owner = null, $has_photo = null, $price_min = null, $price_max = null;
+    
+    protected $listeners = ['categoryChanged'];
+
+    public function categoryChanged($categoryId)
+    {
+        $this->category_id = $categoryId;
+    }
 
     public function render()
     {
         $search = $this->search;
-        if (isset($this->category)) {
-            if ($this->category <= 0) {
-                $this->category = null;
-            }
-        }
-
+        
         // Base query conditions
-        $baseQuery = product::when($this->category, function ($query) {
-            $query->where('category', $this->category);
-        })
+        $baseQuery = product::when($this->category_id, function ($query) {
+                $query->where('category_id', $this->category_id);
+            })
             ->when($this->first_owner, function ($query) {
                 $query->where('First_owner', 1);
             })
@@ -61,10 +64,10 @@ class Filtr extends Component
         // Get regular products
         $regularQuery = clone $baseQuery;
         $regularProducts = $regularQuery->where(function ($query) {
-            $query->where('promote', 0)
-                ->orWhereNull('promote_to')
-                ->orWhere('promote_to', '<=', now());
-        })
+                $query->where('promote', 0)
+                    ->orWhereNull('promote_to')
+                    ->orWhere('promote_to', '<=', now());
+            })
             ->when($this->sort == 1, function ($query) {
                 $query->orderBy('price', 'asc');
             })
@@ -108,8 +111,14 @@ class Filtr extends Component
             ['path' => request()->url(), 'query' => request()->query()]
         );
 
+        $selectedCategory = null;
+        if ($this->category_id) {
+            $selectedCategory = Category::find($this->category_id);
+        }
+
         return view('livewire.filtr', [
-            'products' => $paginator
+            'products' => $paginator,
+            'selectedCategory' => $selectedCategory
         ]);
     }
 }

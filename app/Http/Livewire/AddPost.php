@@ -16,16 +16,37 @@ class AddPost extends Component
     public $categories = [];
     public $photoOrder = []; // Track the order of photos
 
+    public $subcategories = [];
+    public $subsubcategories = [];
+    public $parent_category_id = null;
+    public $subcategory_id = null;
+
     protected $listeners = ['updatePhotoOrder'];
 
     public function mount()
     {
-        $this->categories = Category::where('active', true)
-            ->orderBy('display_order')
-            ->orderBy('name')
-            ->get();
+        $this->categories = Category::getRootCategories();
     }
 
+
+    public function updatedParentCategoryId($value)
+    {
+        $this->subcategories = Category::getSubcategories($value);
+        $this->subcategory_id = null;
+        $this->category_id = null;
+        $this->subsubcategories = [];
+    }
+
+    public function updatedSubcategoryId($value)
+    {
+        $this->subsubcategories = Category::getSubcategories($value);
+        $this->category_id = $value; // Default to subcategory if no sub-subcategory is selected
+    }
+
+    public function updatedCategoryId($value)
+    {
+        // Final category selection
+    }
     // Remove a specific photo before submitting
     public function removePhoto($index)
     {
