@@ -3,18 +3,18 @@
         @if ($existingRoomId)
             <div class="text-center py-3">
                 <i class="ti ti-messages fs-1 text-primary mb-3 d-block"></i>
-                <h4 class="fw-semibold">You already have a conversation</h4>
-                <p class="text-muted mb-4">Continue your existing conversation with this seller</p>
+                <h4 class="fw-semibold">{{ __('product_page.existing_conversation') }}</h4>
+                <p class="text-muted mb-4">{{ __('product_page.continue_conversation') }}</p>
                 <a href="{{ route('chat', $existingRoomId) }}" class="btn btn-primary d-inline-flex align-items-center">
-                    <i class="ti ti-message-circle me-2"></i>Open Conversation
+                    <i class="ti ti-message-circle me-2"></i>{{ __('product_page.open_conversation') }}
                 </a>
             </div>
         @else
             <form wire:submit.prevent="sendMessage">
                 <div class="mb-3">
-                    <label for="messageBody" class="form-label fw-medium">Your Message</label>
+                    <label for="messageBody" class="form-label fw-medium">{{ __('product_page.your_message') }}</label>
                     <textarea id="messageBody" wire:model="body" class="form-control" rows="4"
-                        placeholder="Introduce yourself and ask questions about the product..."></textarea>
+                        placeholder="{{ __('product_page.message_placeholder') }}"></textarea>
                     @error('body')
                         <div class="text-danger small mt-1">
                             <i class="ti ti-alert-circle me-1"></i>{{ $message }}
@@ -24,7 +24,7 @@
 
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center">
-                        <i class="ti ti-send me-2"></i>Send Message
+                        <i class="ti ti-send me-2"></i>{{ __('product_page.send_message') }}
                     </button>
                 </div>
 
@@ -40,10 +40,10 @@
 @else
     <div class="text-center py-4">
         <i class="ti ti-lock fs-1 text-muted mb-3 d-block"></i>
-        <h4 class="fw-semibold">Login Required</h4>
-        <p class="text-muted mb-4">You need to be logged in to contact the seller</p>
+        <h4 class="fw-semibold">{{ __('product_page.login_required') }}</h4>
+        <p class="text-muted mb-4">{{ __('product_page.login_to_contact') }}</p>
         <a href="{{ route('auth') }}" class="btn btn-primary d-inline-flex align-items-center">
-            <i class="ti ti-login me-2"></i>Login / Register
+            <i class="ti ti-login me-2"></i>{{ __('marketplace.login_register') }}
         </a>
     </div>
 @endif

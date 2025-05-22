@@ -8,40 +8,40 @@
             <div class="card shadow-sm">
                 <div class="card-header bg-gray py-3">
                     <h5 class="mb-0 fw-semibold d-flex align-items-center">
-                        <i class="ti ti-adjustments me-2 text-primary"></i>Filters
+                        <i class="ti ti-adjustments me-2 text-primary"></i>{{ __('filtr.filters') }}
                     </h5>
                 </div>
                 <div class="card-body">
                     <!-- Search -->
                     <div class="mb-4">
-                        <label class="form-label fw-medium">Search</label>
+                        <label class="form-label fw-medium">{{ __('filtr.search') }}</label>
                         <div class="input-group">
                             <span class="input-group-text bg-gray border-end-0">
                                 <i class="ti ti-search text-muted"></i>
                             </span>
                             <input type="text" class="form-control border-start-0" wire:model="search"
-                                placeholder="Search products...">
+                                placeholder="{{ __('filtr.search_placeholder') }}">
                         </div>
                     </div>
 
                     <!-- Price Range -->
                     <div class="mb-4">
                         <label class="form-label fw-medium d-flex align-items-center">
-                            <i class="ti ti-currency-dollar me-2 text-primary"></i>Price Range
+                            <i class="ti ti-currency-dollar me-2 text-primary"></i>{{ __('filtr.price_range') }}
                         </label>
                         <div class="row g-2">
                             <div class="col-6">
                                 <div class="input-group">
                                     <span class="input-group-text bg-gray">$</span>
                                     <input type="number" min="0" class="form-control" wire:model="price_min"
-                                        placeholder="Min">
+                                        placeholder="{{ __('filtr.min') }}">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="input-group">
                                     <span class="input-group-text bg-gray">$</span>
                                     <input type="number" min="0" class="form-control" wire:model="price_max"
-                                        placeholder="Max">
+                                        placeholder="{{ __('filtr.max') }}">
                                 </div>
                             </div>
                         </div>
@@ -50,29 +50,29 @@
                     <!-- Checkboxes -->
                     <div class="mb-4">
                         <label class="form-label fw-medium d-flex align-items-center">
-                            <i class="ti ti-filter me-2 text-primary"></i>Additional Filters
+                            <i class="ti ti-filter me-2 text-primary"></i>{{ __('filtr.additional_filters') }}
                         </label>
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="checkbox" id="firstOwner" wire:model="first_owner">
-                            <label class="form-check-label" for="firstOwner">First Owner Only</label>
+                            <label class="form-check-label" for="firstOwner">{{ __('filtr.first_owner_only') }}</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="hasPhoto" wire:model="has_photo">
-                            <label class="form-check-label" for="hasPhoto">With Photos Only</label>
+                            <label class="form-check-label" for="hasPhoto">{{ __('filtr.with_photos_only') }}</label>
                         </div>
                     </div>
 
                     <!-- Sort -->
                     <div class="mb-3">
                         <label for="sort" class="form-label fw-medium d-flex align-items-center">
-                            <i class="ti ti-sort-ascending me-2 text-primary"></i>Sort By
+                            <i class="ti ti-sort-ascending me-2 text-primary"></i>{{ __('filtr.sort_by') }}
                         </label>
                         <select class="form-select" id="sort" wire:model="sort">
-                            <option value="">Relevance</option>
-                            <option value="1">Price: Low to High</option>
-                            <option value="2">Price: High to Low</option>
-                            <option value="3">Oldest</option>
-                            <option value="4">Newest</option>
+                            <option value="">{{ __('filtr.relevance') }}</option>
+                            <option value="1">{{ __('filtr.price_low_high') }}</option>
+                            <option value="2">{{ __('filtr.price_high_low') }}</option>
+                            <option value="3">{{ __('filtr.oldest') }}</option>
+                            <option value="4">{{ __('filtr.newest') }}</option>
                         </select>
                     </div>
                 </div>
@@ -90,16 +90,19 @@
                                         wire:click.prevent="$emitTo('category-filter', 'categorySelected', 1, {{ $selectedCategory->parent->parent->id }})">{{ $selectedCategory->parent->parent->name }}</a>
                                 </li>
                                 <li class="breadcrumb-item"><a href="#"
-                                        wire:click.prevent="$emitTo('category-filter', 'categorySelected', 2, {{ $selectedCategory->parent->id }})">{{ $selectedCategory->parent->name }}</a>
+                                        wire:click.prevent="$emitTo('category-filter', 'categorySelected', 2, {{ $selectedCategory->parent->id }})">{{ $selectedCategory->parent->name }}123</a>
                                 </li>
-                                <li class="breadcrumb-item active">{{ $selectedCategory->name }}</li>
+                                <li class="breadcrumb-item active">{{ __('categories.' . $selectedCategory->name) }}
+                                </li>
                             @elseif($selectedCategory->parent)
                                 <li class="breadcrumb-item"><a href="#"
                                         wire:click.prevent="$emitTo('category-filter', 'categorySelected', 1, {{ $selectedCategory->parent->id }})">{{ $selectedCategory->parent->name }}</a>
                                 </li>
-                                <li class="breadcrumb-item active">{{ $selectedCategory->name }}</li>
+                                <li class="breadcrumb-item active">{{ __('categories.' . $selectedCategory->name) }}
+                                </li>
                             @else
-                                <li class="breadcrumb-item active">{{ $selectedCategory->name }}</li>
+                                <li class="breadcrumb-item active">{{ __('categories.' . $selectedCategory->name) }}
+                                </li>
                             @endif
                         </ol>
                     </nav>
@@ -120,7 +123,7 @@
                                 class="card product-card h-100 {{ $product->promote == 1 && now()->lt($product->promote_to) ? 'promoted' : '' }}">
                                 @if ($product->promote == 1 && now()->lt($product->promote_to))
                                     <div class="badge-promoted">
-                                        <i class="ti ti-star-filled me-1"></i>Featured
+                                        <i class="ti ti-star-filled me-1"></i>{{ __('filtr.featured') }}
                                     </div>
                                 @endif
 
@@ -163,8 +166,8 @@
                 <div class="card shadow-sm">
                     <div class="card-body text-center py-5">
                         <i class="ti ti-search-off fs-1 text-muted mb-3 d-block"></i>
-                        <h3 class="fw-semibold">No products found</h3>
-                        <p class="text-muted">Try adjusting your search or filter criteria</p>
+                        <h3 class="fw-semibold">{{ __('filtr.no_products') }}</h3>
+                        <p class="text-muted">{{ __('filtr.try_adjusting') }}</p>
                     </div>
                 </div>
             @endif
