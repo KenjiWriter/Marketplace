@@ -33,6 +33,16 @@
 
     @livewireStyles
 
+    <script>
+        // Wczesne ustawienie motywu, by uniknąć migotania
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
+        }
+    </script>
+
     <!-- Structured data for SEO -->
     <script type="application/ld+json">
     {
@@ -45,11 +55,16 @@
             "target": "{{ url('/') }}?search={search_term}",
             "query-input": "required name=search_term"
         }
+        
     }
     </script>
 </head>
 
 <body class="d-flex flex-column h-100 bg-body">
+
+    <div id="global-loader">
+        <div class="loader-spinner"></div>
+    </div>
     <!-- Accessibility skip link -->
     <a href="#main-content" class="visually-hidden-focusable">Skip to content</a>
 
@@ -267,6 +282,19 @@
 
     <!-- Custom JavaScript -->
     <script>
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('global-loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+                
+                // Usuń loader po zakończeniu animacji
+                setTimeout(() => {
+                    loader.remove();
+                }, 300);
+            }, 100);
+        });
+
         // Theme toggler functionality
         document.addEventListener('DOMContentLoaded', () => {
             // Theme toggle
