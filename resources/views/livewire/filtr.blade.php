@@ -114,7 +114,7 @@
                     @foreach ($products as $product)
                         <?php
                         $product->CheckPromoting($product->id);
-                        $images = $product->outPutImages($product->id);
+                        $images = $product->getImagesArray($product->id);
                         $img = $images[0] ?? 'noImg.jpg';
                         $description = $product->description ?? 'No item description';
                         ?>

@@ -22,16 +22,12 @@ class Filtr extends Component
     public function render()
     {
         $search = $this->search;
-
-        $categoryIds = [$this->category_id];
-        if ($this->category_id) {
-            $categoryIds = $this->getAllChildCategoryIds($this->category_id);
-        }
-
-        // Base query conditions
-        $baseQuery = product::when($this->category_id, function ($query) use ($categoryIds) {
-            $query->whereIn('category_id', $categoryIds);
-        })
+        $categoryIds = $this->category_id ? $this->getAllChildCategoryIds($this->category_id) : [];
+        
+        $productsQuery = Product::query()
+            ->when($this->category_id, function ($query) use ($categoryIds) {
+                $query->whereIn('category_id', $categoryIds);
+            })
             ->when($this->first_owner, function ($query) {
                 $query->where('First_owner', 1);
             })
@@ -45,84 +41,39 @@ class Filtr extends Component
                 $query->where('price', '<=', $this->price_max);
             })
             ->where('Active', 1)
-            ->where('name', 'like', "%$search%");
-
-        // Get promoted products
-        $promotedQuery = clone $baseQuery;
-        $promotedProducts = $promotedQuery->where('promote', 1)
-            ->whereNotNull('promote_to')
-            ->where('promote_to', '>', now())
-            ->when($this->sort == 1, function ($query) {
-                $query->orderBy('price', 'asc');
-            })
-            ->when($this->sort == 2, function ($query) {
-                $query->orderBy('price', 'desc');
-            })
-            ->when($this->sort == 3, function ($query) {
-                $query->orderBy('created_at', 'asc');
-            })
-            ->when($this->sort == 4, function ($query) {
-                $query->orderBy('created_at', 'desc');
-            })
-            ->orderBy('promote_to', 'desc')
-            ->get();
-
-        // Get regular products
-        $regularQuery = clone $baseQuery;
-        $regularProducts = $regularQuery->where(function ($query) {
-            $query->where('promote', 0)
-                ->orWhereNull('promote_to')
-                ->orWhere('promote_to', '<=', now());
-        })
-            ->when($this->sort == 1, function ($query) {
-                $query->orderBy('price', 'asc');
-            })
-            ->when($this->sort == 2, function ($query) {
-                $query->orderBy('price', 'desc');
-            })
-            ->when($this->sort == 3, function ($query) {
-                $query->orderBy('created_at', 'asc');
-            })
-            ->when($this->sort == 4, function ($query) {
-                $query->orderBy('created_at', 'desc');
-            })
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        // Interleave promoted and regular products (5 promoted, 10 regular, 5 promoted, etc.)
-        $mergedProducts = collect([]);
-        $promotedChunks = $promotedProducts->chunk(5);
-        $regularChunks = $regularProducts->chunk(10);
-
-        $maxChunks = max($promotedChunks->count(), $regularChunks->count());
-
-        for ($i = 0; $i < $maxChunks; $i++) {
-            if (isset($promotedChunks[$i])) {
-                $mergedProducts = $mergedProducts->concat($promotedChunks[$i]);
-            }
-
-            if (isset($regularChunks[$i])) {
-                $mergedProducts = $mergedProducts->concat($regularChunks[$i]);
-            }
+            ->where('name', 'like', "%$search%")
+            ->select(['id', 'name', 'description', 'price', 'images', 'promote', 'promote_to', 'user_id', 'category_id', 'created_at'])
+            ->with(['category:id,name,slug,icon']);
+            
+        // Dodaj sortowanie i promocje jako case when w sql
+        $productsQuery->orderByRaw('CASE WHEN promote = 1 AND promote_to > NOW() THEN 1 ELSE 0 END DESC');
+        
+        // Dodaj pozostałe sortowanie
+        switch($this->sort) {
+            case 1: 
+                $productsQuery->orderBy('price', 'asc');
+                break;
+            case 2:
+                $productsQuery->orderBy('price', 'desc');
+                break;
+            case 3:
+                $productsQuery->orderBy('created_at', 'asc');
+                break;
+            case 4:
+                $productsQuery->orderBy('created_at', 'desc');
+                break;
+            default:
+                $productsQuery->orderBy('created_at', 'desc');
         }
-
-        // Paginate the results
+                
+        // Paginacja
         $perPage = 12;
-        $page = request()->get('page', 1);
-        $paginator = new \Illuminate\Pagination\LengthAwarePaginator(
-            $mergedProducts->forPage($page, $perPage),
-            $mergedProducts->count(),
-            $perPage,
-            $page,
-            ['path' => request()->url(), 'query' => request()->query()]
-        );
-
-        $selectedCategory = null;
-        if ($this->category_id) {
-            $selectedCategory = Category::find($this->category_id);
-        }
+        $products = $productsQuery->paginate($perPage);
+        
+        $selectedCategory = $this->category_id ? Category::find($this->category_id) : null;
+        
         return view('livewire.filtr', [
-            'products' => $paginator,
+            'products' => $products,
             'selectedCategory' => $selectedCategory
         ]);
     }

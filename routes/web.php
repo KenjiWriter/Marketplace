@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\authController;
 use App\Http\Controllers\mainController;
 use App\Http\Controllers\LanguageController;
-
+Route::middleware(['web'])->group(function () {
 Route::get('/', [mainController::class, 'index'])->name('index');
 Route::get('/user/profile/{id}', [mainController::class, 'profile'])->name('profile');
 Route::get('/announcement/{product_id}', [mainController::class, 'product_page'])->name('product_page');
@@ -49,3 +49,4 @@ Route::group(['middleware' => ['authCheck']], function () { //To access these pa
     Route::get('/messages/roomId/{roomId}', [mainController::class, 'chat'])->name('chat');
 });
 Route::get('language/{lang}', [LanguageController::class, 'switchLang'])->name('language.switch');
+});

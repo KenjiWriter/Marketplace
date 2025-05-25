@@ -47,16 +47,19 @@ class Category extends Model
         return $this->hasMany(Product::class);
     }
 
-    /**
-     * Get root categories (top level)
-     */
+/**
+ * Get root categories (top level)
+ */
     public static function getRootCategories()
     {
-        return self::where('active', true)
-            ->whereNull('parent_id')
-            ->orderBy('display_order')
-            ->orderBy('name')
-            ->get();
+        // Przechowuj kategorie najwyższego poziomu w cache przez 24h
+        return cache()->remember('root_categories', 86400, function() {
+            return self::where('active', true)
+                ->whereNull('parent_id')
+                ->orderBy('display_order')
+                ->orderBy('name')
+                ->get();
+        });
     }
 
     /**
@@ -64,11 +67,14 @@ class Category extends Model
      */
     public static function getSubcategories($parentId)
     {
-        return self::where('active', true)
-            ->where('parent_id', $parentId)
-            ->orderBy('display_order')
-            ->orderBy('name')
-            ->get();
+        // Przechowuj podkategorie w cache
+        return cache()->remember('subcategories_'.$parentId, 86400, function() use ($parentId) {
+            return self::where('active', true)
+                ->where('parent_id', $parentId)
+                ->orderBy('display_order')
+                ->orderBy('name')
+                ->get();
+        });
     }
 
     /**

@@ -10,6 +10,12 @@ class product extends Model
     use HasFactory;
 
     protected $dates = ['created_at', 'updated_at', 'promote_to'];
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'promote_to' => 'datetime',
+        'images' => 'array', // Automatycznie obsługuje konwersję JSON
+    ];
 
     /**
      * Get the category that owns the product.
@@ -66,11 +72,9 @@ class product extends Model
         }
     }
 
-    function outPutImages($id)
+    function getImagesArray()
     {
-        $product = product::where('id', $id)->select('images')->first();
-        $images = json_decode($product->images, true);
-        return $images;
+        return $this->images ?: [];
     }
 
     protected $fillable = [
